@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FractalLauncher — End User License Agreement</title>
+<meta name="description" content="End User License Agreement for FractalLauncher, published by FractalLabs. Effective October 22, 2026.">
+<meta name="theme-color" content="#0a0a0d">
+<link rel="icon" type="image/png" href="../logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Geist:wght@300..800&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:#0a0a0d;color:#f4f4f6;font-family:'Geist',-apple-system,'Segoe UI',sans-serif;-webkit-font-smoothing:antialiased;line-height:1.7}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+a{color:inherit;text-decoration:none;cursor:pointer}
+a:focus-visible,button:focus-visible{outline:2px solid currentColor;outline-offset:2px;border-radius:4px}
+img{display:block}
+[id]{scroll-margin-top:120px}
+::selection{background:rgba(95,212,255,.3)}
+
+:root{
+  --bg:#0a0a0d;--srf:#101016;--srf2:#14141c;--fg:#f4f4f6;--mut:#c9c9d2;--dim:#9a9aa6;
+  --brd:rgba(255,255,255,.1);--brd2:rgba(255,255,255,.2);--hov:rgba(255,255,255,.05);
+  --nav:rgba(10,10,13,.75);--acc:#4586c6;--accd:#3770ab;--cy:#5fd4ff;--grn:#3fb950;
+  --warn:#fbbf24;--err:#f87171;--info:#60a5fa;
+  --shadow:0 34px 90px -32px rgba(0,0,0,.75)
+}
+
+.cin{max-width:1120px;margin:0 auto;padding:0 24px}
+.mono{font-family:'Geist Mono',monospace}
+
+/* ---------- NAV ---------- */
+.nav{position:sticky;top:0;z-index:40;-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);background:var(--nav);border-bottom:1px solid var(--brd)}
+.nav .cin{height:96px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.logo{display:flex;align-items:center}
+.lchip{display:inline-flex;align-items:center;justify-content:center;padding:12px 18px;background:#000;border:1px solid var(--brd);border-radius:14px}
+.lchip img{height:72px;width:auto;max-width:none}
+.nlinks{display:flex;gap:26px;font:400 13.5px 'Geist';color:var(--mut)}
+.nlinks a{transition:color .15s}
+.nlinks a:hover{color:#fff}
+.bt{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:42px;padding:0 20px;border-radius:10px;font:500 14px 'Geist';letter-spacing:-.01em;transition:.18s;white-space:nowrap}
+.bt-p{background:var(--acc);color:#fff}
+.bt-p:hover{background:var(--accd)}
+.bt-g{border:1px solid var(--brd2);color:#fff}
+.bt-g:hover{background:var(--hov)}
+.bt-sm{height:34px;padding:0 15px;font-size:13px;border-radius:8px}
+
+/* ---------- TYPE ---------- */
+.eyebrow{font:500 11px 'Geist Mono';letter-spacing:.16em;color:var(--cy);text-transform:uppercase}
+.h2{font:650 clamp(26px,3.4vw,40px)/1.12 'Geist';letter-spacing:-.025em;color:#fff}
+.h3{font:600 18px 'Geist';letter-spacing:-.012em;color:#fff}
+.h4{font:600 14.5px 'Geist';letter-spacing:-.005em;color:#fff;margin:22px 0 8px}
+.sub{font:400 16.5px/1.65 'Geist';color:var(--mut)}
+
+/* ---------- HERO ---------- */
+.hero{text-align:center;padding:clamp(64px,9vw,110px) 0 clamp(40px,5vw,60px);position:relative}
+.hero::after{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.05) 1px,transparent 1px);background-size:26px 26px;-webkit-mask-image:linear-gradient(#000 25%,transparent 85%);mask-image:linear-gradient(#000 25%,transparent 85%);pointer-events:none}
+.hero>*{position:relative;z-index:1}
+.hero h1{font-family:'Archivo Black',sans-serif;font-weight:400;color:#fff;
+  font-size:clamp(34px,6vw,78px);line-height:1.04;letter-spacing:-.01em;text-transform:uppercase;
+  max-width:18ch;margin:0 auto}
+.hero .sub{max-width:64ch;margin:22px auto 0}
+.meta{margin-top:18px;font:400 11px 'Geist Mono';color:var(--cy);letter-spacing:.06em}
+.doclinks{display:flex;justify-content:center;gap:10px;margin-top:24px;flex-wrap:wrap}
+.doclinks a{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border:1px solid var(--brd2);border-radius:20px;font:500 12.5px 'Geist Mono';letter-spacing:.04em;color:var(--mut);transition:.18s;background:var(--srf)}
+.doclinks a:hover{border-color:var(--cy);color:#fff}
+
+/* ---------- RISE ---------- */
+.rise{opacity:0;transform:translateY(14px);animation:rise .65s cubic-bezier(.2,.7,.25,1) forwards;animation-delay:var(--d,0s)}
+@keyframes rise{to{opacity:1;transform:none}}
+
+/* ---------- TOC ---------- */
+.toc-wrap{position:sticky;top:120px;margin-top:8px}
+.toc{background:var(--srf);border:1px solid var(--brd);border-radius:14px;padding:18px 22px}
+.toc h4{font:500 10.5px 'Geist Mono';letter-spacing:.16em;color:var(--cy);text-transform:uppercase;margin-bottom:12px}
+.toc ol{list-style:none;margin:0;padding:0;counter-reset:toc}
+.toc li{counter-increment:toc;margin:0}
+.toc li a{display:flex;gap:10px;padding:6px 0;font:400 12.5px 'Geist';color:var(--mut);transition:color .15s;border-radius:6px;line-height:1.45}
+.toc li a::before{content:counter(toc,decimal-leading-zero);font:400 10.5px 'Geist Mono';color:var(--cy);min-width:22px}
+.toc li a:hover{color:#fff}
+
+/* ---------- LAYOUT ---------- */
+.doc-grid{display:grid;grid-template-columns:260px 1fr;gap:36px;align-items:start;padding-bottom:clamp(56px,8vw,96px)}
+.doc-body{min-width:0}
+
+section.doc{padding:clamp(40px,5vw,56px) 0;border-top:1px solid var(--brd)}
+section.doc:first-child{border-top:0;padding-top:0}
+.doc-head{margin-bottom:24px}
+.doc-head .eyebrow{display:block;margin-bottom:10px}
+.doc-head .h2{margin-bottom:10px}
+
+/* ---------- TEXT ---------- */
+p{margin:10px 0;color:var(--mut);font:400 14.5px/1.7 'Geist'}
+p strong,li strong,td strong{color:#fff;font-weight:600}
+ul,ol{margin:12px 0 12px 4px;color:var(--mut);list-style:none;padding:0}
+ul li,ol li{position:relative;padding-left:22px;margin:7px 0;font:400 14px/1.7 'Geist'}
+ul li::before{content:"";position:absolute;left:6px;top:11px;width:4px;height:4px;border-radius:50%;background:var(--cy)}
+ol{counter-reset:li}
+ol li{counter-increment:li}
+ol li::before{content:counter(li);position:absolute;left:0;top:1px;font:500 11px 'Geist Mono';color:var(--cy);background:rgba(95,212,255,.08);border:1px solid rgba(95,212,255,.2);border-radius:5px;padding:1px 6px;line-height:1.4;min-width:22px;text-align:center}
+ul ul,ol ol,ul ol,ol ul{margin:6px 0 6px 4px}
+em{color:var(--mut);font-style:italic}
+
+/* ---------- CODE ---------- */
+code{font-family:'Geist Mono',monospace;font-size:.86em;background:rgba(69,134,198,.14);color:#9fcdf5;padding:2px 7px;border-radius:5px;border:1px solid rgba(69,134,198,.18)}
+pre{background:#08080b;border:1px solid var(--brd);border-radius:12px;padding:16px 18px;overflow-x:auto;margin:14px 0}
+pre code{background:none;color:#c9d4e8;padding:0;font-size:12.5px;line-height:1.7;border:0}
+
+/* ---------- TABLES ---------- */
+table{width:100%;border-collapse:collapse;margin:16px 0;font:400 13.5px/1.55 'Geist';overflow:hidden;border-radius:12px;border:1px solid var(--brd)}
+th,td{border-bottom:1px solid var(--brd);padding:13px 16px;text-align:left;vertical-align:top}
+th{background:var(--srf);color:var(--cy);font:500 11px 'Geist Mono';letter-spacing:.1em;text-transform:uppercase;padding:14px 16px}
+td{color:var(--mut)}
+tr:last-child td{border-bottom:0}
+tr:hover td{background:rgba(255,255,255,.015)}
+td code{white-space:nowrap}
+
+/* ---------- CARDS ---------- */
+.card{background:var(--srf);border:1px solid var(--brd);border-radius:14px;padding:18px 22px;margin:16px 0}
+.card.warn{border-left:3px solid var(--warn)}
+.card.err{border-left:3px solid var(--err)}
+.card.ok{border-left:3px solid var(--grn)}
+.card.info{border-left:3px solid var(--info)}
+.card p{margin:6px 0}
+.card p:first-child{margin-top:0}
+.card p:last-child{margin-bottom:0}
+.card ul, .card ol{margin:8px 0 4px}
+
+/* ---------- CALLOUT ---------- */
+.callout{background:var(--srf2);border:1px solid var(--brd2);border-left:3px solid var(--warn);border-radius:14px;padding:22px 26px;margin:24px 0;font:400 14.5px/1.75 'Geist';color:var(--mut)}
+.callout strong.lead{display:block;color:var(--warn);font:600 12px 'Geist Mono';letter-spacing:.12em;text-transform:uppercase;margin-bottom:10px}
+.callout p{margin:8px 0;color:var(--mut)}
+.callout strong{color:#fff}
+.callout a.ref{color:var(--cy);border-bottom:1px solid rgba(95,212,255,.3)}
+.callout a.ref:hover{color:#fff;border-color:#fff}
+
+/* ---------- INLINE REF LINKS ---------- */
+a.ref{color:var(--cy);transition:color .15s;border-bottom:1px solid rgba(95,212,255,.3)}
+a.ref:hover{color:#fff;border-color:#fff}
+
+/* ---------- SUBHEADINGS INSIDE SECTIONS ---------- */
+section.doc h3{font:600 16px 'Geist';letter-spacing:-.01em;color:#fff;margin:24px 0 8px;padding-top:6px}
+section.doc h3::before{content:"§";color:var(--cy);font:400 13px 'Geist Mono';margin-right:8px;opacity:.7}
+
+/* ---------- STRIP ---------- */
+.strip{margin-top:clamp(44px,6vw,68px);border-top:1px solid var(--brd);border-bottom:1px solid var(--brd);display:flex;flex-wrap:wrap;justify-content:center}
+.strip span{font:400 10px 'Geist Mono';letter-spacing:.18em;color:var(--cy);padding:13px 18px;border-right:1px solid var(--brd)}
+.strip span:last-child{border-right:0}
+
+/* ---------- FOOTER ---------- */
+.foot{border-top:1px solid var(--brd)}
+.foot .cin{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding-top:26px;padding-bottom:30px;font:400 11px 'Geist Mono';letter-spacing:.04em;color:var(--mut)}
+.foot .fbrand{display:flex;align-items:center;gap:12px}
+.fchip{display:inline-flex;align-items:center;justify-content:center;padding:8px 12px;background:#000;border:1px solid var(--brd);border-radius:8px}
+.fchip img{height:38px;width:auto;max-width:none}
+.foot a:hover{color:#fff}
+.foot .fdocs{display:flex;gap:14px;flex-wrap:wrap}
+.foot .fdocs a{color:var(--cy);transition:color .15s}
+.foot .fdocs a:hover{color:#fff}
+
+/* ---------- SCROLLBAR ---------- */
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-track{background:#08080b}
+::-webkit-scrollbar-thumb{background:#23232d;border-radius:6px;border:2px solid #08080b}
+::-webkit-scrollbar-thumb:hover{background:#2f2f3c}
+
+/* ---------- RESPONSIVE ---------- */
+@media(max-width:960px){
+  .doc-grid{grid-template-columns:1fr;gap:0}
+  .toc-wrap{position:relative;top:0;margin-bottom:24px}
+  .toc ol{columns:2;column-gap:18px}
+}
+@media(max-width:860px){
+  .nlinks{display:none}
+  .nav .cin{height:88px}
+  .lchip img{height:60px}
+  .toc ol{columns:1}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001s!important;transition-duration:.001s!important;scroll-behavior:auto!important}
+}
+</style>
+</head>
+<body>
+
+<header class="nav"><div class="cin">
+  <a class="logo" href="../index.html" aria-label="FractalLauncher — home">
+    <span class="lchip"><img src="../full.png" alt="FractalLauncher"></span>
+  </a>
+  <nav class="nlinks">
+    <a href="../">Home</a>
+    <a href="../documentation">Documentation</a>
+    <a href="EULA.html">EULA</a>
+    <a href="TOS.html">Terms</a>
+  </nav>
+  <a class="bt bt-p bt-sm" data-dl href="https://launcher.extremeteam.online/downloads">Download</a>
+</div></header>
+
+<div class="hero cin" id="top">
+  <span class="eyebrow rise">LEGAL · PUBLISHED BY FRACTALLABS</span>
+  <h1 class="rise" style="--d:.08s;margin-top:16px">End User License Agreement</h1>
+  <p class="sub rise" style="--d:.14s">The license that governs <strong style="color:#fff">FractalLauncher</strong> — version 1.2.3 and later — including the executable, all associated files, and every third-party component bundled with it.</p>
+  <p class="meta rise" style="--d:.2s">EFFECTIVE OCTOBER 22, 2026 &nbsp;·&nbsp; VERSION 1.0 &nbsp;·&nbsp;Contact: FractalLabsISAC@gmail.com</p>
+  <div class="doclinks rise" style="--d:.26s">
+    <a href="../tos">Terms of Service →</a>
+    <a href="../documentation">Technical Documentation →</a>
+  </div>
+</div>
+
+<div class="cin">
+  <div class="strip">
+    <span>DEFINITIONS</span><span>LICENSE GRANT</span><span>RESTRICTIONS</span><span>THIRD-PARTY</span><span>MICROSOFT / MOJANG</span><span>OPEN-SOURCE</span><span>UPDATES</span><span>TERMINATION</span><span>WARRANTIES</span><span>LIABILITY</span>
+  </div>
+</div>
+
+<div class="cin">
+<div class="doc-grid">
+
+  <!-- ============ TOC ============ -->
+  <aside class="toc-wrap">
+    <nav class="toc">
+      <h4>Contents</h4>
+      <ol>
+        <li><a href="#s1">Definitions</a></li>
+        <li><a href="#s2">License Grant</a></li>
+        <li><a href="#s3">Restrictions</a></li>
+        <li><a href="#s4">Third-Party Components</a></li>
+        <li><a href="#s5">Microsoft / Mojang Disclaimer</a></li>
+        <li><a href="#s6">Open-Source Compliance</a></li>
+        <li><a href="#s7">Updates &amp; Changes</a></li>
+        <li><a href="#s8">Termination</a></li>
+        <li><a href="#s9">Disclaimer of Warranties</a></li>
+        <li><a href="#s10">Limitation of Liability</a></li>
+        <li><a href="#s11">Indemnification</a></li>
+        <li><a href="#s12">Governing Law</a></li>
+        <li><a href="#s13">Miscellaneous</a></li>
+        <li><a href="#s14">Contact</a></li>
+      </ol>
+    </nav>
+  </aside>
+
+  <!-- ============ BODY ============ -->
+  <main class="doc-body">
+
+    <!-- ===== CALLOUT ===== -->
+    <div class="callout">
+      <strong class="lead">⚠ Important — read carefully</strong>
+      <p>This End User License Agreement ("EULA") is a legal agreement between you ("you", "the user", "Licensee") and <strong>FractalLabs</strong> ("FractalLabs", "we", "us", "our") for the software product <strong>FractalLauncher</strong> (version 1.2.3 and later), including the executable, all associated files, and every third-party component bundled with it (collectively, the "Software").</p>
+      <p>By downloading, installing, copying, running, or otherwise using the Software, you acknowledge that you have read, understood, and agree to be bound by the terms of this EULA. <strong>If you do NOT agree to these terms, do not use the Software — delete it and all of its components from your devices.</strong></p>
+      <p>If a separate <a class="ref" href="TOS.html">Terms of Service ("TOS")</a> accompanies the Software, both documents apply: this EULA governs your license to the Software itself, and the TOS governs your use of the Software's features and the third-party services it interacts with. In the event of a conflict regarding licensing of the Software, this EULA controls; regarding use of features and services, the TOS controls.</p>
+    </div>
+
+    <!-- ===== 1. DEFINITIONS ===== -->
+    <section class="doc" id="s1">
+      <div class="doc-head">
+        <span class="eyebrow">SECTION 01</span>
+        <h2 class="h2">Definitions</h2>
+      </div>
+      <table>
+        <tr><th>Term</th><th>Meaning</th></tr>
+        <tr><td><strong>"Software"</strong></td><td>The FractalLauncher application in any form (source code, compiled executable, installers, archives), together with all files, assets, documentation, configuration presets, bundled runtimes and libraries distributed with it.</td></tr>
+        <tr><td><strong>"Bundled Components"</strong></td><td>Third-party software included within or distributed alongside the Software — including but not limited to the Oracle JDK, runtime Python libraries, JavaScript libraries, and the authlib-injector JAR (see Section 4).</td></tr>
+        <tr><td><strong>"Object Code" / "Executable"</strong></td><td>The compiled, non-source form of the Software (e.g., <code>FractalLauncher.exe</code>).</td></tr>
+        <tr><td><strong>"You" / "Licensee"</strong></td><td>The individual or legal entity obtaining a license under this EULA.</td></tr>
+        <tr><td><strong>"Third-Party Services"</strong></td><td>External services reached through the Software, such as Microsoft/Xbox, Mojang/Minecraft, Modrinth, Cerebras, and mod-loader repositories.</td></tr>
+        <tr><td><strong>"Source Code"</strong></td><td>The human-readable Python, HTML, CSS and JavaScript source files of the FractalLauncher launcher itself, as distributed in the repository.</td></tr>
+      </table>
+    </section>
+
+    <!-- ===== 2. LICENSE GRANT ===== -->
+    <section class="doc" id="s2">
+      <div class="doc-head">
+        <span class="eyebrow">SECTION 02</span>
+        <h2 class="h2">License Grant</h2>
+      </div>
+      <p>Subject to your complete and continuous compliance with this EULA, FractalLabs grants you a <strong>personal, limited, non-exclusive, non-transferable, non-sublicensable, revocable</strong> license to:</p>
+      <ul>
+        <li><strong>(a)</strong> install and run the Object Code of the Software on devices you own or control, for personal, non-commercial use;</li>
+        <li><strong>(b)</strong> use the Software's features (launching Minecraft, managing profiles/accounts/mods, and related functionality) in accordance with this EULA and the accompanying TOS;</li>
+        <li><strong>(c)</strong> make reasonable private backup copies of the Software for archival purposes.</li>
+      </ul>
+
+      <h3>2.1 Relationship to the MIT License (Source Code)</h3>
+      <p>The <strong>launcher's own Source Code</strong> in the repository is separately released under the <strong>MIT License</strong> (see <code>README.md</code>). Nothing in this EULA limits your rights under the MIT License with respect to <em>that Source Code in isolation</em>.</p>
+      <p>This EULA governs the <strong>assembled Software as a product</strong> — in particular the compiled Executable and the Bundled Components, which include third-party material that is <strong>not</strong> MIT-licensed (most notably the Oracle JDK, covered in Section 4). Where this EULA and the MIT License cover the same material, <strong>this EULA applies to the assembled distribution</strong> because it carries the obligations imposed by the licenses of the components we did not author.</p>
+
+      <h3>2.2 Scope note</h3>
+      <p>This license is <strong>per-user, not per-device</strong>. It applies to your personal use across your own devices. It does not grant you any ownership interest in the Software.</p>
+    </section>
+
+    <!-- ===== 3. RESTRICTIONS ===== -->
+    <section class="doc" id="s3">
+      <div class="doc-head">
+        <span class="eyebrow">SECTION 03</span>
+        <h2 class="h2">Restrictions</h2>
+      </div>
+      <p>Except as expressly permitted by this EULA, the MIT License (for Source Code), or by mandatory applicable law, you must <strong>not</strong>:</p>
+      <ol>
+        <li><strong>Redistribute or resell</strong> the Software, the Executable, or the assembled bundle (including the Software bundled with the Oracle JDK or other Bundled Components) as a product, service, or paid offering, or pass it off as your own.</li>
+        <li><strong>Sell, rent, lease, sublicense or trade</strong> the Software or any rights granted under it.</li>
+        <li><strong>Modify the Executable</strong> to remove, obscure, or alter copyright, trademark, license or attribution notices — including notices embedded in Bundled Components — except where the applicable open-source license expressly permits it.</li>
+        <li><strong>Reverse engineer, decompile, or disassemble</strong> the Object Code of the Software or any Bundled Component, to the extent such restriction is not prohibited by mandatory applicable law. (Your rights to inspect the launcher's own Source Code are governed by the MIT License and are not restricted by this clause.)</li>
+        <li><strong>Circumvent or bypass</strong> authentication, entitlement, or security mechanisms reached through the Software, or use the Software to gain access to accounts, content, or services you are not authorized to access.</li>
+        <li><strong>Use the Software for illegal purposes</strong>, for the distribution of malware, or to violate the terms of any Third-Party Service (see Section 5 and the TOS).</li>
+        <li><strong>Remove, disable or obscure</strong> licensing, technical notices, or protection features of any Bundled Component.</li>
+        <li><strong>Export or use the Software</strong> in violation of applicable export-control, sanctions, or other laws.</li>
+      </ol>
+    </section>
+
+    <!-- ===== 4. THIRD-PARTY COMPONENTS ===== -->
+    <section class="doc" id="s4">
+      <div class="doc-head">
+        <span class="eyebrow">SECTION 04</span>
+        <h2 class="h2">Third-Party Components (Bundled Components)</h2>
+      </div>
+      <p>The Software incorporates or bundles third-party open-source and proprietary components, each under its own license. <strong>Your use of each component is governed by its own license, which prevails over this EULA for that component.</strong> The principal components are:</p>
+      <table>
+        <tr><th>Component</th><th>License / Terms</th><th>Notes</th></tr>
+        <tr><td><strong>Oracle JDK 25.0.2</strong> (bundled in <code>jdk/</code>)</td><td>Oracle <strong>No-Fee Terms and Conditions (NFTC)</strong> — <a class="ref" href="https://www.oracle.com/downloads/licenses/no-fee-license.html">oracle.com/…/no-fee-license.html</a></td><td>⚠ <strong>Not covered by MIT.</strong> Redistribution of the Oracle JDK is subject to Oracle's NFTC terms. If you redistribute the Software, you must comply with the Oracle JDK license separately, or remove <code>jdk/</code>.</td></tr>
+        <tr><td><strong>minecraft-launcher-lib</strong></td><td>MIT</td><td>Python library; download/install logic</td></tr>
+        <tr><td><strong>pywebview</strong></td><td>MIT</td><td>Window/bridge framework</td></tr>
+        <tr><td><strong>Pillow (PIL)</strong></td><td>MIT-CMU (HPND)</td><td>Image processing</td></tr>
+        <tr><td><strong>requests</strong></td><td>Apache-2.0</td><td>HTTP</td></tr>
+        <tr><td><strong>cryptography</strong></td><td>Apache-2.0 OR BSD-3-Clause</td><td>RSA texture signing</td></tr>
+        <tr><td><strong>CustomTkinter</strong></td><td>MIT</td><td>Legacy UI fallback dependency</td></tr>
+        <tr><td><strong>skinview3d v3.4.2</strong></td><td>MIT</td><td>3D skin viewer (<code>assets/lib/skinview3d.bundle.js</code>)</td></tr>
+        <tr><td><strong>three.js r156</strong> (embedded)</td><td>MIT</td><td>WebGL engine inside the skinview3d bundle</td></tr>
+        <tr><td><strong>Authlib-Injector</strong> (<code>Authlib/Authlib.jar</code>)</td><td>Original upstream license</td><td>Java agent for skin/auth injection</td></tr>
+        <tr><td><strong>Microsoft Edge WebView2 Runtime</strong></td><td>Microsoft WebView2 license</td><td>Provided by Windows/the OS, not by us</td></tr>
+        <tr><td><strong>ModLoader installers</strong> (Fabric / Quilt / Forge / NeoForge)</td><td>Their respective licenses</td><td>Downloaded from official Maven repositories at your request</td></tr>
+        <tr><td><strong>Configuration presets</strong> (<code>config/</code>)</td><td>Community mod configs (Sodium, Lithium, ModernFix, EntityCulling, …)</td><td>Each belongs to its mod's authors</td></tr>
+      </table>
+      <p>Full license texts for OS-bundled components are shipped where required, e.g. under <code>jdk/legal/</code>.</p>
+      <div class="card warn">
+        <p><strong style="color:#fff">Disclaimer:</strong> FractalLabs is not the author of these components and provides them without any warranty of any kind (see Section 9). The inclusion of a component does not imply endorsement by its authors.</p>
+      </div>
+    </section>
+
+    <!-- ===== 5. MICROSOFT / MOJANG ===== -->
+    <section class="doc" id="s5">
+      <div class="doc-head">
+        <span class="eyebrow">SECTION 05</span>
+        <h2 class="h2">Microsoft, Xbox and Mojang/Minecraft Disclaimer</h2>
+      </div>
+      <ul>
+        <li>FractalLabs is <strong>not affiliated with, endorsed by, sponsored by, or connected to</strong> Mojang Studios, Microsoft Corporation, Xbox, or any of their affiliates.</li>
+        <li><strong>Minecraft</strong>, <strong>Mojang</strong>, <strong>Xbox</strong> and related trademarks, names and assets are the property of their respective owners. The Software is an independent, unofficial tool.</li>
+        <li>Microsoft login uses a publicly available OAuth client registration; authentication traffic goes directly between your device and Microsoft's servers. <strong>FractalLabs never receives, stores on its own servers, or has any access to your Microsoft password.</strong> (Access/refresh tokens are stored only locally on your device — see TOS §9.)</li>
+        <li>Your use of Microsoft, Xbox, Mojang and Minecraft services is governed exclusively by <strong>their</strong> terms and privacy policies. It is your responsibility to review and comply with them, including the <em>Minecraft End User License Agreement</em> and the <em>Xbox/Microsoft Services Agreement</em>.</li>
+        <li>The <strong>offline-mode</strong> functionality of the Software is unofficial and not provided by Mojang or Microsoft; its availability and permissibility are your sole responsibility (see TOS §4).</li>
+      </ul>
+    </section>
+
+    <!-- ===== 6. OPEN-SOURCE COMPLIANCE ===== -->
+    <section class="doc" id="s6">
+      <div class="doc-head">
+        <span class="eyebrow">SECTION 06</span>
+        <h2 class="h2">Open-Source Compliance and Attribution</h2>
+      </div>
+      <p>Where the Software's own Source Code (MIT License) is distributed, the copyright notice and permission notice of the MIT License must be preserved. Where Bundled Components are redistributed, their license headers, notices and license texts must remain intact and be made available to recipients. Nothing in this EULA prevents you from exercising rights expressly granted by any applicable open-source license.</p>
+    </section>
+
+    <!-- ===== 7. UPDATES ===== -->
+    <section class="doc" id="s7">
+      <div class="doc-head">
+        <span class="eyebrow">SECTION 07</span>
+        <h2 class="h2">Updates, New Versions and Feature Changes</h2>
+      </div>
+      <ul>
+        <li>FractalLabs may release updates, patches, new versions or removals of features at any time, with or without notice.</li>
+        <li>This EULA applies to every update or new version of the Software unless a replacement agreement accompanies it, in which case that agreement governs the updated Software.</li>
+        <li>Updates may change third-party integrations (e.g., OAuth clients, API endpoints, mod sources) as services evolve.</li>
+      </ul>
+    </section>
+
+    <!-- ===== 8. TERMINATION ===== -->
+    <section class="doc" id="s8">
+      <div class="doc-head">
+        <span class="eyebrow">SECTION 08</span>
+        <h2 class="h2">Termination</h2>
+      </div>
+      <p>This license is effective until terminated.</p>
+      <ul>
+        <li><strong>Automatic termination:</strong> your license terminates automatically, without notice, if you breach any term of this EULA.</li>
+        <li><strong>Effect of termination:</strong> you must immediately stop using the Software and destroy all copies (including the Executable and Bundled Components) in your possession. Sections 1, 4, 9, 10, 11, 12 and 13 survive termination.</li>
+        <li><strong>Your right to stop at any time:</strong> you may terminate this EULA at any time by permanently uninstalling the Software and deleting all copies, without prejudice to any rights of FractalLabs that arose prior to termination.</li>
+        <li><strong>No refund:</strong> the Software is provided free of charge; no refund of any kind is due, to the extent refunds are even applicable.</li>
+      </ul>
+    </section>
+
+    <!-- ===== 9. WARRANTIES ===== -->
+    <section class="doc" id="s9">
+      <div class="doc-head">
+        <span class="eyebrow">SECTION 09</span>
+        <h2 class="h2">Disclaimer of Warranties</h2>
+      </div>
+      <div class="card err">
+        <p><strong>TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, THE SOFTWARE IS PROVIDED "AS IS" AND "AS AVAILABLE", WITHOUT WARRANTY OF ANY KIND, WHETHER EXPRESS, IMPLIED, STATUTORY OR OTHERWISE.</strong></p>
+        <p>FRACTALLABS EXPRESSLY DISCLAIMS ALL WARRANTIES, INCLUDING BUT NOT LIMITED TO:</p>
+        <ul>
+          <li><strong>(a)</strong> IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT;</li>
+          <li><strong>(b)</strong> ANY WARRANTY THAT THE SOFTWARE WILL BE UNINTERRUPTED, TIMELY, SECURE OR ERROR-FREE, OR THAT DEFECTS WILL BE CORRECTED;</li>
+          <li><strong>(c)</strong> ANY WARRANTY REGARDING ACCURACY, RELIABILITY OR THE RESULTS OBTAINED THROUGH THE SOFTWARE;</li>
+          <li><strong>(d)</strong> ANY WARRANTY ARISING FROM COURSE OF DEALING OR USAGE OF TRADE;</li>
+          <li><strong>(e)</strong> ANY WARRANTY CONCERNING THIRD-PARTY SERVICES, THIRD-PARTY CONTENT, MODS, SERVERS, OR BUNDLED COMPONENTS, ALL OF WHICH ARE PROVIDED BY THEIR OWN AUTHORS UNDER THEIR OWN TERMS.</li>
+        </ul>
+        <p>YOU EXPRESSLY ASSUME ALL RISK AND RESPONSIBILITY FOR THE USE OF THE SOFTWARE. IN PARTICULAR, NO ADVICE OR INFORMATION (ORAL OR WRITTEN) OBTAINED FROM FRACTALLABS OR THROUGH THE SOFTWARE SHALL CREATE ANY WARRANTY NOT EXPRESSLY STATED HEREIN.</p>
+      </div>
+    </section>
+
+    <!-- ===== 10. LIABILITY ===== -->
+    <section class="doc" id="s10">
+      <div class="doc-head">
+        <span class="eyebrow">SECTION 10</span>
+        <h2 class="h2">Limitation of Liability</h2>
+      </div>
+      <div class="card err">
+        <p><strong>TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT SHALL FRACTALLABS, ITS CONTRIBUTORS, MAINTAINERS, OR AFFILIATES BE LIABLE FOR ANY:</strong></p>
+        <ul>
+          <li><strong>(a)</strong> INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, EXEMPLARY OR PUNITIVE DAMAGES;</li>
+          <li><strong>(b)</strong> LOSS OF PROFITS, DATA, GOODWILL, BUSINESS OPPORTUNITY, OR COMPUTER DAMAGE (INCLUDING CORRUPTION);</li>
+          <li><strong>(c)</strong> DAMAGE RESULTING FROM INTERRUPTED OR LOST GAME SESSIONS, CORRUPTED WORLDS OR SAVES, LOST MODS, LOST SCREENSHOTS, LOST BACKUPS, OR LOST ACCOUNT ACCESS;</li>
+          <li><strong>(d)</strong> DAMAGE RESULTING FROM THIRD-PARTY SERVICE OUTAGES, API CHANGES, BANS OR RESTRICTIONS IMPOSED BY MICROSOFT, MOJANG, MODRINTH, CEREBRAS OR ANY OTHER THIRD PARTY;</li>
+          <li><strong>(e)</strong> DAMAGE RESULTING FROM THE STORAGE, LOSS, THEFT OR COMPROMISE OF LOCALLY STORED ACCOUNT TOKENS;</li>
+        </ul>
+        <p><strong>WHETHER BASED IN CONTRACT, TORT (INCLUDING NEGLIGENCE), STRICT LIABILITY OR ANY OTHER THEORY, EVEN IF FRACTALLABS HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.</strong></p>
+        <p><strong>IN ALL CASES, FRACTALLABS' TOTAL AGGREGATE LIABILITY UNDER OR IN CONNECTION WITH THIS EULA SHALL NOT EXCEED THE GREATER OF (I) THE AMOUNT YOU PAID FRACTALLABS FOR THE SOFTWARE IN THE TWELVE (12) MONTHS PRECEDING THE CLAIM (WHICH IS ZERO FOR THE FREE SOFTWARE) OR (II) €10.00 (TEN EUROS).</strong></p>
+        <p>Some jurisdictions do not allow the exclusion or limitation of certain damages; in such cases, our liability is limited to the fullest extent permitted by law.</p>
+      </div>
+    </section>
+
+    <!-- ===== 11. INDEMNIFICATION ===== -->
+    <section class="doc" id="s11">
+      <div class="doc-head">
+        <span class="eyebrow">SECTION 11</span>
+        <h2 class="h2">Indemnification</h2>
+      </div>
+      <p>You agree to defend, indemnify and hold harmless FractalLabs and its contributors, maintainers and affiliates from and against any and all claims, damages, obligations, losses, liabilities, costs and expenses (including reasonable attorneys' fees) arising from: <strong>(a)</strong> your use of the Software; <strong>(b)</strong> your violation of any term of this EULA or the TOS; <strong>(c)</strong> your violation of any third-party right, including any intellectual property or privacy right; or <strong>(d)</strong> your use of Third-Party Services reached through the Software.</p>
+    </section>
+
+    <!-- ===== 12. GOVERNING LAW ===== -->
+    <section class="doc" id="s12">
+      <div class="doc-head">
+        <span class="eyebrow">SECTION 12</span>
+        <h2 class="h2">Governing Law and Disputes</h2>
+      </div>
+      <p>This EULA shall be governed by and construed in accordance with the laws applicable in your jurisdiction of residence, without regard to conflict-of-law principles, <strong>to the extent permitted by applicable law</strong>. Any disputes arising out of or relating to this EULA shall be resolved in the competent courts of your place of residence, to the extent permitted by mandatory applicable law. If any provision of this EULA is held unenforceable, the remaining provisions remain in full force.</p>
+    </section>
+
+    <!-- ===== 13. MISC ===== -->
+    <section class="doc" id="s13">
+      <div class="doc-head">
+        <span class="eyebrow">SECTION 13</span>
+        <h2 class="h2">Miscellaneous</h2>
+      </div>
+      <ol>
+        <li><strong>Severability.</strong> If any provision is held invalid or unenforceable, it shall be modified to the minimum extent necessary to make it enforceable, and the remainder of this EULA shall continue in effect.</li>
+        <li><strong>No waiver.</strong> Failure to enforce any provision is not a waiver of the right to do so later.</li>
+        <li><strong>Entire agreement.</strong> This EULA, together with the TOS and the MIT License (for Source Code), constitutes the entire agreement between you and FractalLabs concerning the Software and supersedes all prior or contemporaneous communications.</li>
+        <li><strong>Assignment.</strong> You may not assign or transfer this EULA or any rights under it. FractalLabs may assign this agreement as part of a reorganization, merger, or transfer of the project.</li>
+        <li><strong>Force majeure.</strong> FractalLabs is not liable for failures caused by events beyond its reasonable control (including outages of Microsoft, Mojang, Modrinth, Cerebras, hosting providers, or the internet).</li>
+        <li><strong>Headings.</strong> Section headings are for convenience only and do not affect interpretation.</li>
+      </ol>
+    </section>
+
+    <!-- ===== 14. CONTACT ===== -->
+    <section class="doc" id="s14">
+      <div class="doc-head">
+        <span class="eyebrow">SECTION 14</span>
+        <h2 class="h2">Contact</h2>
+      </div>
+      <div class="card info">
+        <p>Questions about this EULA:</p>
+        <p><strong>FractalLabs</strong> — email: <strong>FractalLabsISAC@gmail.com</strong></p>
+      </div>
+    </section>
+
+  </main>
+</div>
+</div>
+
+<footer class="foot"><div class="cin">
+  <span class="fbrand">
+    <span class="fchip"><img src="../full.png" alt=""></span>
+    <span>© 2026
+        THEEXTREME_RAY — FRACTALLAUNCHER</span>
+  </span>
+  <span class="fdocs">
+    <a href="../tos">TERMS OF SERVICE</a>
+    <a href="../documentation">DOCUMENTATION</a>
+  </span>
+  <span>NOT AFFILIATED WITH MOJANG STUDIOS OR MICROSOFT</span>
+</div></footer>
+
+</body>
+</html>

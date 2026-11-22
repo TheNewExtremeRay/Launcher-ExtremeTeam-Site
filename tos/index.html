@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FractalLauncher — Terms of Service</title>
+<meta name="description" content="Terms of Service for FractalLauncher, published by FractalLabs. Effective October 22, 2026.">
+<meta name="theme-color" content="#0a0a0d">
+<link rel="icon" type="image/png" href="../logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Geist:wght@300..800&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:#0a0a0d;color:#f4f4f6;font-family:'Geist',-apple-system,'Segoe UI',sans-serif;-webkit-font-smoothing:antialiased;line-height:1.7}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+a{color:inherit;text-decoration:none;cursor:pointer}
+a:focus-visible,button:focus-visible{outline:2px solid currentColor;outline-offset:2px;border-radius:4px}
+img{display:block}
+[id]{scroll-margin-top:120px}
+::selection{background:rgba(95,212,255,.3)}
+
+:root{
+  --bg:#0a0a0d;--srf:#101016;--srf2:#14141c;--fg:#f4f4f6;--mut:#c9c9d2;--dim:#9a9aa6;
+  --brd:rgba(255,255,255,.1);--brd2:rgba(255,255,255,.2);--hov:rgba(255,255,255,.05);
+  --nav:rgba(10,10,13,.75);--acc:#4586c6;--accd:#3770ab;--cy:#5fd4ff;--grn:#3fb950;
+  --warn:#fbbf24;--err:#f87171;--info:#60a5fa;
+  --shadow:0 34px 90px -32px rgba(0,0,0,.75)
+}
+
+.cin{max-width:1120px;margin:0 auto;padding:0 24px}
+.mono{font-family:'Geist Mono',monospace}
+
+/* ---------- NAV ---------- */
+.nav{position:sticky;top:0;z-index:40;-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);background:var(--nav);border-bottom:1px solid var(--brd)}
+.nav .cin{height:96px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.logo{display:flex;align-items:center}
+.lchip{display:inline-flex;align-items:center;justify-content:center;padding:12px 18px;background:#000;border:1px solid var(--brd);border-radius:14px}
+.lchip img{height:72px;width:auto;max-width:none}
+.nlinks{display:flex;gap:26px;font:400 13.5px 'Geist';color:var(--mut)}
+.nlinks a{transition:color .15s}
+.nlinks a:hover{color:#fff}
+.bt{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:42px;padding:0 20px;border-radius:10px;font:500 14px 'Geist';letter-spacing:-.01em;transition:.18s;white-space:nowrap}
+.bt-p{background:var(--acc);color:#fff}
+.bt-p:hover{background:var(--accd)}
+.bt-g{border:1px solid var(--brd2);color:#fff}
+.bt-g:hover{background:var(--hov)}
+.bt-sm{height:34px;padding:0 15px;font-size:13px;border-radius:8px}
+
+/* ---------- TYPE ---------- */
+.eyebrow{font:500 11px 'Geist Mono';letter-spacing:.16em;color:var(--cy);text-transform:uppercase}
+.h2{font:650 clamp(26px,3.4vw,40px)/1.12 'Geist';letter-spacing:-.025em;color:#fff}
+.h3{font:600 18px 'Geist';letter-spacing:-.012em;color:#fff}
+.h4{font:600 14.5px 'Geist';letter-spacing:-.005em;color:#fff;margin:22px 0 8px}
+.sub{font:400 16.5px/1.65 'Geist';color:var(--mut)}
+
+/* ---------- HERO ---------- */
+.hero{text-align:center;padding:clamp(64px,9vw,110px) 0 clamp(40px,5vw,60px);position:relative}
+.hero::after{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.05) 1px,transparent 1px);background-size:26px 26px;-webkit-mask-image:linear-gradient(#000 25%,transparent 85%);mask-image:linear-gradient(#000 25%,transparent 85%);pointer-events:none}
+.hero>*{position:relative;z-index:1}
+.hero h1{font-family:'Archivo Black',sans-serif;font-weight:400;color:#fff;
+  font-size:clamp(34px,6vw,78px);line-height:1.04;letter-spacing:-.01em;text-transform:uppercase;
+  max-width:18ch;margin:0 auto}
+.hero .sub{max-width:64ch;margin:22px auto 0}
+.meta{margin-top:18px;font:400 11px 'Geist Mono';color:var(--cy);letter-spacing:.06em}
+.doclinks{display:flex;justify-content:center;gap:10px;margin-top:24px;flex-wrap:wrap}
+.doclinks a{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border:1px solid var(--brd2);border-radius:20px;font:500 12.5px 'Geist Mono';letter-spacing:.04em;color:var(--mut);transition:.18s;background:var(--srf)}
+.doclinks a:hover{border-color:var(--cy);color:#fff}
+
+/* ---------- RISE ---------- */
+.rise{opacity:0;transform:translateY(14px);animation:rise .65s cubic-bezier(.2,.7,.25,1) forwards;animation-delay:var(--d,0s)}
+@keyframes rise{to{opacity:1;transform:none}}
+
+/* ---------- TOC ---------- */
+.toc-wrap{position:sticky;top:120px;margin-top:8px}
+.toc{background:var(--srf);border:1px solid var(--brd);border-radius:14px;padding:18px 22px}
+.toc h4{font:500 10.5px 'Geist Mono';letter-spacing:.16em;color:var(--cy);text-transform:uppercase;margin-bottom:12px}
+.toc ol{list-style:none;margin:0;padding:0;counter-reset:toc}
+.toc li{counter-increment:toc;margin:0}
+.toc li a{display:flex;gap:10px;padding:6px 0;font:400 12.5px 'Geist';color:var(--mut);transition:color .15s;border-radius:6px;line-height:1.45}
+.toc li a::before{content:counter(toc,decimal-leading-zero);font:400 10.5px 'Geist Mono';color:var(--cy);min-width:22px}
+.toc li a:hover{color:#fff}
+
+/* ---------- LAYOUT ---------- */
+.doc-grid{display:grid;grid-template-columns:260px 1fr;gap:36px;align-items:start;padding-bottom:clamp(56px,8vw,96px)}
+.doc-body{min-width:0}
+
+section.doc{padding:clamp(40px,5vw,56px) 0;border-top:1px solid var(--brd)}
+section.doc:first-child{border-top:0;padding-top:0}
+.doc-head{margin-bottom:24px}
+.doc-head .eyebrow{display:block;margin-bottom:10px}
+.doc-head .h2{margin-bottom:10px}
+
+/* ---------- TEXT ---------- */
+p{margin:10px 0;color:var(--mut);font:400 14.5px/1.7 'Geist'}
+p strong,li strong,td strong{color:#fff;font-weight:600}
+ul,ol{margin:12px 0 12px 4px;color:var(--mut);list-style:none;padding:0}
+ul li,ol li{position:relative;padding-left:22px;margin:7px 0;font:400 14px/1.7 'Geist'}
+ul li::before{content:"";position:absolute;left:6px;top:11px;width:4px;height:4px;border-radius:50%;background:var(--cy)}
+ol{counter-reset:li}
+ol li{counter-increment:li}
+ol li::before{content:counter(li);position:absolute;left:0;top:1px;font:500 11px 'Geist Mono';color:var(--cy);background:rgba(95,212,255,.08);border:1px solid rgba(95,212,255,.2);border-radius:5px;padding:1px 6px;line-height:1.4;min-width:22px;text-align:center}
+ul ul,ol ol,ul ol,ol ul{margin:6px 0 6px 4px}
+em{color:var(--mut);font-style:italic}
+
+/* ---------- CODE ---------- */
+code{font-family:'Geist Mono',monospace;font-size:.86em;background:rgba(69,134,198,.14);color:#9fcdf5;padding:2px 7px;border-radius:5px;border:1px solid rgba(69,134,198,.18)}
+pre{background:#08080b;border:1px solid var(--brd);border-radius:12px;padding:16px 18px;overflow-x:auto;margin:14px 0}
+pre code{background:none;color:#c9d4e8;padding:0;font-size:12.5px;line-height:1.7;border:0}
+
+/* ---------- TABLES ---------- */
+table{width:100%;border-collapse:collapse;margin:16px 0;font:400 13.5px/1.55 'Geist';overflow:hidden;border-radius:12px;border:1px solid var(--brd)}
+th,td{border-bottom:1px solid var(--brd);padding:13px 16px;text-align:left;vertical-align:top}
+th{background:var(--srf);color:var(--cy);font:500 11px 'Geist Mono';letter-spacing:.1em;text-transform:uppercase;padding:14px 16px}
+td{color:var(--mut)}
+tr:last-child td{border-bottom:0}
+tr:hover td{background:rgba(255,255,255,.015)}
+td code{white-space:nowrap}
+
+/* ---------- CARDS ---------- */
+.card{background:var(--srf);border:1px solid var(--brd);border-radius:14px;padding:18px 22px;margin:16px 0}
+.card.warn{border-left:3px solid var(--warn)}
+.card.err{border-left:3px solid var(--err)}
+.card.ok{border-left:3px solid var(--grn)}
+.card.info{border-left:3px solid var(--info)}
+.card p{margin:6px 0}
+.card p:first-child{margin-top:0}
+.card p:last-child{margin-bottom:0}
+.card ul, .card ol{margin:8px 0 4px}
+
+/* ---------- BIG QUOTE / CALLOUT ---------- */
+.callout{background:var(--srf2);border:1px solid var(--brd2);border-left:3px solid var(--warn);border-radius:14px;padding:22px 26px;margin:24px 0;font:400 14.5px/1.75 'Geist';color:var(--mut)}
+.callout strong.lead{display:block;color:var(--warn);font:600 12px 'Geist Mono';letter-spacing:.12em;text-transform:uppercase;margin-bottom:10px}
+.callout p{margin:8px 0;color:var(--mut)}
+.callout strong{color:#fff}
+.callout a.ref{color:var(--cy);border-bottom:1px solid rgba(95,212,255,.3)}
+.callout a.ref:hover{color:#fff;border-color:#fff}
+
+/* ---------- INLINE REF LINKS ---------- */
+a.ref{color:var(--cy);transition:color .15s;border-bottom:1px solid rgba(95,212,255,.3)}
+a.ref:hover{color:#fff;border-color:#fff}
+
+/* ---------- SUBHEADINGS INSIDE SECTIONS ---------- */
+section.doc h3{font:600 16px 'Geist';letter-spacing:-.01em;color:#fff;margin:24px 0 8px;padding-top:6px}
+section.doc h3::before{content:"§";color:var(--cy);font:400 13px 'Geist Mono';margin-right:8px;opacity:.7}
+
+/* ---------- STRIP ---------- */
+.strip{margin-top:clamp(44px,6vw,68px);border-top:1px solid var(--brd);border-bottom:1px solid var(--brd);display:flex;flex-wrap:wrap;justify-content:center}
+.strip span{font:400 10px 'Geist Mono';letter-spacing:.18em;color:var(--cy);padding:13px 18px;border-right:1px solid var(--brd)}
+.strip span:last-child{border-right:0}
+
+/* ---------- FOOTER ---------- */
+.foot{border-top:1px solid var(--brd)}
+.foot .cin{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding-top:26px;padding-bottom:30px;font:400 11px 'Geist Mono';letter-spacing:.04em;color:var(--mut)}
+.foot .fbrand{display:flex;align-items:center;gap:12px}
+.fchip{display:inline-flex;align-items:center;justify-content:center;padding:8px 12px;background:#000;border:1px solid var(--brd);border-radius:8px}
+.fchip img{height:38px;width:auto;max-width:none}
+.foot a:hover{color:#fff}
+.foot .fdocs{display:flex;gap:14px;flex-wrap:wrap}
+.foot .fdocs a{color:var(--cy);transition:color .15s}
+.foot .fdocs a:hover{color:#fff}
+
+/* ---------- SCROLLBAR ---------- */
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-track{background:#08080b}
+::-webkit-scrollbar-thumb{background:#23232d;border-radius:6px;border:2px solid #08080b}
+::-webkit-scrollbar-thumb:hover{background:#2f2f3c}
+
+/* ---------- RESPONSIVE ---------- */
+@media(max-width:960px){
+  .doc-grid{grid-template-columns:1fr;gap:0}
+  .toc-wrap{position:relative;top:0;margin-bottom:24px}
+  .toc ol{columns:2;column-gap:18px}
+}
+@media(max-width:860px){
+  .nlinks{display:none}
+  .nav .cin{height:88px}
+  .lchip img{height:60px}
+  .toc ol{columns:1}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001s!important;transition-duration:.001s!important;scroll-behavior:auto!important}
+}
+</style>
+</head>
+<body>
+
+<header class="nav"><div class="cin">
+  <a class="logo" href="../index.html" aria-label="FractalLauncher — home">
+    <span class="lchip"><img src="../full.png" alt="FractalLauncher"></span>
+  </a>
+  <nav class="nlinks">
+    <a href="../">Home</a>
+    <a href="../documentation/documentation.html">Documentation</a>
+    <a href="EULA.html">EULA</a>
+    <a href="TOS.html">Terms</a>
+  </nav>
+  <a class="bt bt-p bt-sm" data-dl href="https://launcher.extremeteam.online/downloads">Download</a>
+</div></header>
+
+<div class="hero cin" id="top">
+  <span class="eyebrow rise">LEGAL · PUBLISHED BY FRACTALLABS</span>
+  <h1 class="rise" style="--d:.08s;margin-top:16px">Terms of Service</h1>
+  <p class="sub rise" style="--d:.14s">The terms that govern your use of <strong style="color:#fff">FractalLauncher</strong> — version 1.2.3 and later — and every feature, integration and third-party service it touches.</p>
+  <p class="meta rise" style="--d:.2s">EFFECTIVE OCTOBER 22, 2026 &nbsp;·&nbsp; VERSION 1.0 &nbsp;·&nbsp; CONTACT@FRACTALLAUNCHER.DEV</p>
+  <div class="doclinks rise" style="--d:.26s">
+    <a href="../eula">← End User License Agreement</a>
+    <a href="https://launcher.extremeteam.online/documentation">Technical Documentation →</a>
+  </div>
+</div>
+
+<div class="cin">
+  <div class="strip">
+    <span>ACCEPTANCE</span><span>ACCOUNTS</span><span>OFFLINE MODE</span><span>THIRD-PARTY SERVICES</span><span>AI THEMES</span><span>MODS</span><span>PRIVACY</span><span>LIABILITY</span><span>TERMINATION</span>
+  </div>
+</div>
+
+<div class="cin">
+<div class="doc-grid">
+
+  <!-- ============ TOC ============ -->
+  <aside class="toc-wrap">
+    <nav class="toc">
+      <h4>Contents</h4>
+      <ol>
+        <li><a href="#s1">Acceptance of Terms</a></li>
+        <li><a href="#s2">Description of the Service</a></li>
+        <li><a href="#s3">Accounts and Authentication</a></li>
+        <li><a href="#s4">Offline Mode, Bans, Game Integrity</a></li>
+        <li><a href="#s5">Third-Party Services</a></li>
+        <li><a href="#s6">AI Themes (BYOK)</a></li>
+        <li><a href="#s7">Mods, Shaders, Loaders</a></li>
+        <li><a href="#s8">Acceptable Use</a></li>
+        <li><a href="#s9">Local Data, Privacy</a></li>
+        <li><a href="#s10">User Content</a></li>
+        <li><a href="#s11">Disclaimers</a></li>
+        <li><a href="#s12">Limitation of Liability</a></li>
+        <li><a href="#s13">Termination and Uninstall</a></li>
+        <li><a href="#s14">Changes to These Terms</a></li>
+        <li><a href="#s15">Third-Party Terms Precedence</a></li>
+        <li><a href="#s16">Miscellaneous</a></li>
+        <li><a href="#s17">Contact</a></li>
+      </ol>
+    </nav>
+  </aside>
+
+  <!-- ============ BODY ============ -->
+  <main class="doc-body">
+
+    <!-- ===== CALLOUT ===== -->
+    <div class="callout">
+      <strong class="lead">⚠ Important — read carefully</strong>
+      <p>These Terms of Service ("Terms", "TOS") govern your use of <strong>FractalLauncher</strong> (version 1.2.3 and later) and all features, content and third-party integrations it provides ("the Service"), published by <strong>FractalLabs</strong> ("FractalLabs", "we", "us", "our").</p>
+      <p>Your use of the Software is also governed by our <a class="ref" href="EULA.html">End User License Agreement (EULA)</a>. Capitalized terms not defined here have the meaning given in the EULA.</p>
+      <p><strong>By downloading, installing or using FractalLauncher you agree to be bound by these Terms and the EULA. If you do not agree, do not use the Software — delete it and all of its components.</strong></p>
+    </div>
+
+    <!-- ===== 1. ACCEPTANCE ===== -->
+    <section class="doc" id="s1">
+      <div class="doc-head">
+        <span class="eyebrow">SECTION 01</span>
+        <h2 class="h2">Acceptance of Terms</h2>
+      </div>
+      <ol>
+        <li>These Terms form a binding agreement between you and FractalLabs.</li>
+        <li>You represent that you have the legal capacity to enter into these Terms in your jurisdiction. If you act on behalf of an organization, you represent that you have authority to bind that organization.</li>
+        <li><strong>Continued use after an updated version of these Terms is published constitutes acceptance of the updated Terms</strong> (see §14).</li>
+      </ol>
+    </section>
+
+    <!-- ===== 2. DESCRIPTION ===== -->
+    <section class="doc" id="s2">
+      <div class="doc-head">
+        <span class="eyebrow">SECTION 02</span>
+        <h2 class="h2">Description of the Service</h2>
+      </div>
+      <ol>
+        <li>FractalLauncher is a <strong>local, desktop Minecraft launcher</strong>. It provides, among other features:
+          <ul>
+            <li>launching Minecraft (vanilla and modded) with an included bundled Java runtime;</li>
+            <li>profile and account management (Microsoft and offline accounts);</li>
+            <li>mod, shader and resource-pack browsing and installation (via Modrinth);</li>
+            <li>mod-loader installation (Fabric, Quilt, Forge, NeoForge) from official repositories;</li>
+            <li>skin/cape preview and management, screenshots, world backups, a game console and diagnostics;</li>
+            <li>AI-generated color themes (bring-your-own-key, see §6);</li>
+            <li>a local server-ping feature for latency checks.</li>
+          </ul>
+        </li>
+        <li><strong>FractalLabs operates no backend servers.</strong> The Software runs entirely on your device. The only servers your device contacts are <strong>third-party services</strong> (§5) and loopback addresses on your own machine (<code>127.0.0.1</code>). There is no "FractalLabs account system" — local profiles are not FractalLabs accounts.</li>
+        <li>The Software is provided <strong>free of charge</strong>. FractalLabs reserves the right, in the future, to introduce fees for certain features with prior notice; features in use at that time will remain available for a reasonable transition period.</li>
+        <li><strong>The Service is provided on an "as is" and "as available" basis.</strong> We do not guarantee any feature, uptime, compatibility with every Minecraft version/mod/server, or continued availability of any integration.</li>
+      </ol>
+    </section>
+
+    <!-- ===== 3. ACCOUNTS ===== -->
+    <section class="doc" id="s3">
+      <div class="doc-head">
+        <span class="eyebrow">SECTION 03</span>
+        <h2 class="h2">Accounts and Authentication</h2>
+      </div>
+
+      <h3>3.1 Microsoft accounts</h3>
+      <ol>
+        <li>Microsoft sign-in uses the standard OAuth 2.0 authorization-code flow (with PKCE) using a publicly available client registration. The authentication exchange happens <strong>directly between your device and Microsoft</strong> (<code>login.microsoftonline.com</code>, <code>login.live.com</code>, Xbox Live and <code>api.minecraftservices.com</code>).</li>
+        <li><strong>Your credentials are never provided to FractalLabs.</strong> We never see, request, transmit or store your Microsoft password.</li>
+        <li>Access tokens and refresh tokens obtained through the flow are stored <strong>locally on your device</strong> in a plain-text file (<code>~/.FractalLauncher/profiles.json</code>). <strong>You acknowledge this storage method</strong> and accept all risk arising from it: anyone with access to your user account or device files may be able to read those tokens. You are responsible for securing your device (login password, disk encryption, file permissions).</li>
+        <li>You are responsible for all activity performed with your Microsoft/Minecraft account through the Software, and for keeping your Microsoft account secure.</li>
+        <li>You must comply with the <strong>Microsoft Services Agreement</strong>, the <strong>Xbox terms</strong>, and the <strong>Minecraft End User License Agreement</strong> when using Microsoft sign-in. FractalLabs is not affiliated with Microsoft or Mojang (EULA §5).</li>
+      </ol>
+
+      <h3>3.2 Offline accounts</h3>
+      <ol>
+        <li>The Software can create <strong>offline accounts</strong> — local, unofficial profiles with a generated (fake) UUID and a fixed dummy token. They are <strong>not</strong> Mojang/Microsoft accounts and are not registered with Mojang.</li>
+        <li>Offline accounts provide access to single-player and to servers that explicitly permit offline/cracked logins. They <strong>do not</strong> grant access to Realms, official online-mode servers, or authenticated services.</li>
+        <li><strong>Whether offline-mode play is acceptable is entirely your responsibility.</strong> Many servers and services prohibit it; some jurisdictions or contexts may implicate the Minecraft EULA. FractalLabs does not encourage, endorse or take responsibility for any use of offline mode that violates a server's rules, the Minecraft EULA, or applicable law. If a server bans offline accounts, or Microsoft restricts your account, FractalLabs is not responsible.</li>
+      </ol>
+
+      <h3>3.3 Local profiles are yours to manage</h3>
+      <ol>
+        <li>All profiles are stored locally. Deleting <code>~/.FractalLauncher/</code> removes them permanently, including tokens — FractalLabs cannot recover them. Use the built-in backups feature (or your own copies) for game saves.</li>
+      </ol>
+    </section>
+
+    <!-- ===== 4. OFFLINE / BANS / INTEGRITY ===== -->
+    <section class="doc" id="s4">
+      <div class="doc-head">
+        <span class="eyebrow">SECTION 04</span>
+        <h2 class="h2">Offline Mode, Bans, and Game Integrity</h2>
+      </div>
+      <ol>
+        <li>The Software may launch Minecraft with modified JVM arguments, a bundled Java runtime, an authlib-injector agent, and (at your request) local performance/mod configuration files.</li>
+        <li><strong>Anti-cheat and server policy are your responsibility.</strong> Launching the game through FractalLauncher does not make any mod, resource pack, JVM flag or account type permissible on any given server. Some servers or services restrict mods, boosters, or account types; violating their rules can result in bans <strong>for which FractalLabs bears no responsibility</strong>.</li>
+        <li>The diagnostics feature may recommend actions (e.g., deleting a conflicting <code>opengl32.dll</code>). Acting on diagnostics output is at your own risk; review changes before applying them.</li>
+        <li><strong>Worlds, saves, screenshots and backups.</strong> Although the Software includes a backup feature, you are responsible for your own data. FractalLabs is not liable for corrupted, lost or inaccessible game saves, worlds, mods, screenshots or backups (EULA §10).</li>
+      </ol>
+    </section>
+
+    <!-- ===== 5. THIRD-PARTY ===== -->
+    <section class="doc" id="s5">
+      <div class="doc-head">
+        <span class="eyebrow">SECTION 05</span>
+        <h2 class="h2">Third-Party Services</h2>
+      </div>
+      <ol>
+        <li>The Software interacts with third-party services, including:
+          <table>
+            <tr><th>Provider</th><th>Purpose</th><th>Terms</th></tr>
+            <tr><td><strong>Microsoft / Xbox / Minecraft Services</strong></td><td>Login, token refresh, entitlements</td><td>Microsoft Services Agreement, Xbox terms, Minecraft EULA</td></tr>
+            <tr><td><strong>Mojang</strong> (<code>sessionserver.mojang.com</code>, <code>api.mojang.com</code>)</td><td>Profiles, skins, UUIDs</td><td>Mojang/Minecraft terms</td></tr>
+            <tr><td><strong>Modrinth</strong> (<code>api.modrinth.com</code>)</td><td>Mod / shader / resource-pack search &amp; downloads</td><td>Modrinth Terms of Service</td></tr>
+            <tr><td><strong>Cerebras</strong> (<code>api.cerebras.ai</code>)</td><td>AI theme generation (BYOK)</td><td>Cerebras Terms / Privacy Policy</td></tr>
+            <tr><td><strong>Fabric, Quilt, Forge, NeoForge repositories</strong></td><td>Mod-loader installers</td><td>Their respective licenses/terms</td></tr>
+            <tr><td><strong>Minecraft server operators</strong> (any server you ping or join)</td><td>Multiplayer</td><td>Each server's own rules</td></tr>
+          </table>
+        </li>
+        <li><strong>These services are governed by their own terms and privacy policies, which prevail over these Terms for their respective services.</strong> FractalLabs has no control over their availability, content, pricing or policies, and is not responsible for outages, changes, terminations, bans or any other acts of these third parties.</li>
+        <li>It is your responsibility to review and comply with all applicable third-party terms.</li>
+      </ol>
+    </section>
+
+    <!-- ===== 6. AI THEMES ===== -->
+    <section class="doc" id="s6">
+      <div class="doc-head">
+        <span class="eyebrow">SECTION 06</span>
+        <h2 class="h2">AI Theme Generation (Bring-Your-Own-Key)</h2>
+      </div>
+      <ol>
+        <li>The Software can generate color palettes from a text description using a <strong>third-party large-language-model API (Cerebras)</strong>. This feature is <strong>optional</strong> and requires <strong>your own API key</strong> ("BYOK").</li>
+        <li><strong>Obtaining the key:</strong> you must register with the AI provider yourself and obtain an API key under <strong>their</strong> terms. FractalLabs is not affiliated with the AI provider and receives no revenue, share, or data from your key.</li>
+        <li><strong>Your key stays on your device.</strong> It is stored locally (default: <code>~/.FractalLauncher/cerebras_api_key.txt</code>, plain text — you acknowledge this storage method and its risks). The key is transmitted <strong>only</strong> to the AI provider's official API endpoint when you request theme generation.</li>
+        <li><strong>Prompts go to the AI provider.</strong> Any description you type for theme generation is sent to the AI provider, together with your API key, subject to <strong>their</strong> privacy policy and terms. Do not send personal, confidential or sensitive information in prompts.</li>
+        <li><strong>AI output is provided as-is.</strong> Generated palettes may be inaccurate, unattractive, or unsuitable. FractalLabs does not review, endorse or warrant any AI output. You are responsible for evaluating generated themes before use.</li>
+        <li><strong>Compliance with the AI provider's terms</strong> (rate limits, prohibited uses, content policies) is your responsibility. Abuse of your key or of the provider's API is between you and the provider.</li>
+        <li>FractalLabs may change or remove the AI integration at any time (e.g., if the provider's API changes).</li>
+      </ol>
+    </section>
+
+    <!-- ===== 7. MODS ===== -->
+    <section class="doc" id="s7">
+      <div class="doc-head">
+        <span class="eyebrow">SECTION 07</span>
+        <h2 class="h2">Mods, Shaders, Resource Packs and Loader Installers</h2>
+      </div>
+      <ol>
+        <li>The Software lets you search, download and install modifications (collectively, "Mods") from <strong>Modrinth</strong> and install mod loaders from their <strong>official repositories</strong>.</li>
+        <li><strong>Mods belong to their authors.</strong> FractalLabs does not create, host, own or endorse Mods distributed through the Software. Each Mod is subject to its own license and terms; <strong>you must review and comply with each Mod's license</strong> before installing or redistributing it.</li>
+        <li><strong>Modrinth content rules apply.</strong> Downloads are served from Modrinth under Modrinth's terms of service. FractalLabs merely provides a client for Modrinth's public API.</li>
+        <li><strong>No piracy.</strong> The Software is not designed to bypass payment, licensing or authentication for premium or paid Mods, and must not be used to obtain paid content without authorization. Any attempt to do so violates these Terms and may violate applicable law.</li>
+        <li><strong>Mod safety is your responsibility.</strong> Mods are executable code. FractalLabs does not scan, verify, virus-check or approve Mods. Install Mods only from sources you trust; use Modrinth's moderation signals (download counts, verified status) at your own discretion.</li>
+        <li><strong>Mod compatibility and world safety.</strong> Removing or adding Mods can corrupt saves or crash the game. Back up your worlds before changing Mod sets. FractalLabs is not liable for damaged saves or lost Mod configurations (EULA §10).</li>
+        <li><strong>Loader installers</strong> (Fabric / Quilt / Forge / NeoForge) are downloaded from the projects' official Maven repositories and executed on your machine using your configured Java runtime — standard behavior for these installers. This execution happens with your implicit consent each time an install is requested.</li>
+      </ol>
+    </section>
+
+    <!-- ===== 8. ACCEPTABLE USE ===== -->
+    <section class="doc" id="s8">
+      <div class="doc-head">
+        <span class="eyebrow">SECTION 08</span>
+        <h2 class="h2">Acceptable Use</h2>
+      </div>
+      <p>You agree <strong>not</strong> to use the Software to:</p>
+      <ol>
+        <li><strong>Violate any law</strong> or third-party right (including intellectual-property, privacy, export-control and sanctions laws).</li>
+        <li><strong>Distribute malware</strong> — use the Software to create, distribute, or spread viruses, trojans, ransomware, spyware or any malicious code.</li>
+        <li><strong>Circumvent authentication or entitlements</strong> — bypass Microsoft/Mojang authentication, paywalls, license checks, or access content you are not authorized to access.</li>
+        <li><strong>Abuse third-party APIs</strong> — scrape, spam, overload or automate excessive requests against Modrinth, Microsoft, Mojang, Cerebras or any other service beyond what the Software's normal features do.</li>
+        <li><strong>Abuse the server-ping feature</strong> — use it to flood, DDoS, or stress any server, or to scan networks. The ping feature sends a single status request per click; it must not be weaponized.</li>
+        <li><strong>Impersonate or deceive</strong> — misrepresent the Software's origin, rebrand it as your own commercial product without permission (EULA §3), or use generated themes/content to facilitate fraud.</li>
+        <li><strong>Exploit other users</strong> — harass, threaten, defame, or harm others through any feature of the Software (e.g., sharing malicious server IPs, malicious resource packs/screenshots).</li>
+        <li><strong>Circumvent these Terms</strong> — interfere with the Software's operation, attempt unauthorized access to FractalLabs systems (if any), or probe for vulnerabilities.</li>
+        <li><strong>Resell the Service</strong> — use the free Software as the basis of a paid hosting, boosting, or automation service without our written consent.</li>
+      </ol>
+      <p>Violation of this section terminates your license (EULA §8) and may give rise to civil or criminal liability.</p>
+    </section>
+
+    <!-- ===== 9. PRIVACY ===== -->
+    <section class="doc" id="s9">
+      <div class="doc-head">
+        <span class="eyebrow">SECTION 09</span>
+        <h2 class="h2">Local Data, Privacy and Telemetry</h2>
+      </div>
+      <ol>
+        <li><strong>Everything stays on your device.</strong> FractalLabs <strong>operates no servers</strong> and <strong>collects no telemetry</strong>. The Software does not phone home to FractalLabs. No analytics, tracking, crash-reporting or usage-data transmission to FractalLabs exists in the Software.</li>
+        <li><strong>What is stored locally</strong> (all inside <code>~/.FractalLauncher/</code> on Windows):
+          <table>
+            <tr><th>Data</th><th>File</th><th>Sensitivity</th></tr>
+            <tr><td>Accounts &amp; tokens (incl. Microsoft access/refresh tokens)</td><td><code>profiles.json</code></td><td><strong>High — plain text</strong></td></tr>
+            <tr><td>Profiles, settings, servers list</td><td><code>config.json</code></td><td>Low-medium</td></tr>
+            <tr><td>AI API key (if you use AI themes)</td><td><code>cerebras_api_key.txt</code></td><td><strong>High — plain text</strong></td></tr>
+            <tr><td>Generated themes</td><td><code>custom_themes.json</code>, <code>custom_themes_web.json</code></td><td>Low</td></tr>
+            <tr><td>Cached skins</td><td><code>skins/*.png</code></td><td>Low</td></tr>
+            <tr><td>World backups (zip)</td><td><code>backups/*.zip</code></td><td>User content</td></tr>
+            <tr><td>Uploaded fonts</td><td><code>fonts/</code></td><td>User content</td></tr>
+            <tr><td>Diagnostic log</td><td><code>launcher.log</code></td><td>Low</td></tr>
+          </table>
+        </li>
+        <li><strong>What is sent to third parties</strong> (and only when you use the corresponding feature):
+          <ul>
+            <li>authentication/refresh requests → Microsoft, Xbox, Minecraft Services;</li>
+            <li>profile/skin lookups → Mojang session servers;</li>
+            <li>search/download requests → Modrinth; mod metadata → loader repositories;</li>
+            <li>theme prompts + your API key → Cerebras (AI themes only);</li>
+            <li>one status packet → the game server whose IP you ping.</li>
+          </ul>
+        </li>
+        <li><strong>Your responsibilities:</strong> secure your device, do not share the <code>~/.FractalLauncher/</code> folder, and understand that <strong>plain-text token storage is a deliberate simplicity trade-off with real risk</strong>. If your machine is compromised, your Microsoft tokens may be exposed — revoke sessions via your Microsoft account security page if you suspect compromise.</li>
+        <li><strong>Deletion:</strong> uninstalling the Software and deleting <code>~/.FractalLauncher/</code> erases all local data. FractalLabs retains nothing because nothing is sent to us.</li>
+        <li><strong>Backups you export</strong> (world zips, screenshots) are your data; handle them as you see fit.</li>
+      </ol>
+    </section>
+
+    <!-- ===== 10. USER CONTENT ===== -->
+    <section class="doc" id="s10">
+      <div class="doc-head">
+        <span class="eyebrow">SECTION 10</span>
+        <h2 class="h2">User Content</h2>
+      </div>
+      <ol>
+        <li><strong>"User Content"</strong> means anything you supply through the Software: usernames, skins, capes, server entries, screenshots, notes (JVM notepad), themes you write, and backup content.</li>
+        <li>You warrant that you own or have all necessary rights to your User Content, and that its use as contemplated by the Software does not infringe any third-party rights.</li>
+        <li>You must not use User Content for anything illegal, hateful, exploitative, or infringing. FractalLabs has no ability to moderate content that never leaves your device — but you remain responsible for how you use and share it (e.g., a skin you distribute on a server).</li>
+        <li>Since User Content generally never leaves your device, FractalLabs neither reviews nor stores it.</li>
+      </ol>
+    </section>
+
+    <!-- ===== 11. DISCLAIMERS ===== -->
+    <section class="doc" id="s11">
+      <div class="doc-head">
+        <span class="eyebrow">SECTION 11</span>
+        <h2 class="h2">Disclaimers</h2>
+      </div>
+      <div class="card err">
+        <p><strong>THE SOFTWARE IS PROVIDED "AS IS" AND "AS AVAILABLE" WITHOUT WARRANTIES OF ANY KIND, EXPRESS OR IMPLIED</strong>, as detailed in EULA §9, including implied warranties of merchantability, fitness for a particular purpose, and non-infringement.</p>
+        <p>Without limiting the above, FractalLabs does <strong>not</strong> warrant that:</p>
+        <ul>
+          <li>the Software will work with every Minecraft version, mod, mod loader, server or hardware configuration;</li>
+          <li>Microsoft/Mojang/Modrinth/Cerebras integrations will remain functional (they may change or break without any action by us);</li>
+          <li>the Software is free of defects, or that downloads (game files, mods, installers) are complete or error-free — while official downloads are checksum-verified where available, FractalLabs is not a guarantor of third-party downloads;</li>
+          <li>offline mode, AI themes, server pings or backups will meet your expectations.</li>
+        </ul>
+        <p>FractalLabs does not provide technical support unless and where it chooses to do so voluntarily.</p>
+      </div>
+    </section>
+
+    <!-- ===== 12. LIABILITY ===== -->
+    <section class="doc" id="s12">
+      <div class="doc-head">
+        <span class="eyebrow">SECTION 12</span>
+        <h2 class="h2">Limitation of Liability</h2>
+      </div>
+      <div class="card err">
+        <p>To the maximum extent permitted by applicable law, FractalLabs and its contributors shall not be liable for any indirect, incidental, special, consequential or punitive damages, or any loss of data, accounts, worlds, saves, tokens, profits or goodwill, arising from your use of (or inability to use) the Software — including but not limited to account bans, token theft, corrupted worlds, failed backups, outages of third-party services, or AI-generated content, as further specified in EULA §10.</p>
+        <p>Our total aggregate liability shall not exceed the greater of the amount you paid us in the twelve months before the claim (<strong>€0</strong> for the free Software) or <strong>€10.00</strong>.</p>
+        <p>Some jurisdictions do not allow certain limitations; in those cases, our liability is limited to the fullest extent permitted by law.</p>
+      </div>
+    </section>
+
+    <!-- ===== 13. TERMINATION ===== -->
+    <section class="doc" id="s13">
+      <div class="doc-head">
+        <span class="eyebrow">SECTION 13</span>
+        <h2 class="h2">Termination and Uninstall</h2>
+      </div>
+      <ol>
+        <li><strong>You may stop using the Software at any time</strong> by uninstalling it; no notice to FractalLabs is required.</li>
+        <li><strong>We may restrict or terminate</strong> your license by publishing a notice or by making the Software unavailable, if you breach these Terms (EULA §8). Since we have no server-side control over your local installation, "termination" means your right to use the Software ends; you must then uninstall it.</li>
+        <li><strong>Effect of termination:</strong> stop all use, uninstall, and destroy copies. Sections that by their nature should survive (disclaimers, liability limits, indemnity, governing law) survive termination.</li>
+        <li><strong>No data retention by us:</strong> termination has no effect on third-party services; if you need to revoke access granted through the Software, revoke it at the provider (e.g., Microsoft account security → apps with account access; Cerebras dashboard → API keys).</li>
+      </ol>
+    </section>
+
+    <!-- ===== 14. CHANGES ===== -->
+    <section class="doc" id="s14">
+      <div class="doc-head">
+        <span class="eyebrow">SECTION 14</span>
+        <h2 class="h2">Changes to These Terms</h2>
+      </div>
+      <ol>
+        <li>FractalLabs may update these Terms at any time. The current version is always the copy distributed with the Software, with its effective date at the top.</li>
+        <li>Material changes will be indicated by bumping the version number/date; where practical, a notice will also appear in the Software or the project documentation.</li>
+        <li>Your continued use of the Software after updated Terms are published constitutes acceptance of them. If you do not agree, uninstall the Software.</li>
+      </ol>
+    </section>
+
+    <!-- ===== 15. PRECEDENCE ===== -->
+    <section class="doc" id="s15">
+      <div class="doc-head">
+        <span class="eyebrow">SECTION 15</span>
+        <h2 class="h2">Precedence of Third-Party Terms</h2>
+      </div>
+      <p>For any subject matter governed by a third party's terms (Microsoft/Xbox authentication, Mojang/Minecraft services, Modrinth content, Cerebras AI, loader repositories, individual Mods), <strong>that third party's terms prevail</strong>. These Terms and the EULA govern the relationship between you and FractalLabs only.</p>
+    </section>
+
+    <!-- ===== 16. MISC ===== -->
+    <section class="doc" id="s16">
+      <div class="doc-head">
+        <span class="eyebrow">SECTION 16</span>
+        <h2 class="h2">Miscellaneous</h2>
+      </div>
+      <ol>
+        <li><strong>Severability.</strong> If any provision is unenforceable, it shall be modified to the minimum extent necessary and the remainder stays in effect.</li>
+        <li><strong>No class actions / waiver of jury trial</strong> — to the extent permitted by applicable law, claims must be brought individually, not as part of a class or representative action.</li>
+        <li><strong>Entire agreement.</strong> These Terms plus the EULA (and the MIT License for the Source Code) are the entire agreement between you and FractalLabs.</li>
+        <li><strong>No waiver.</strong> Failure to enforce a provision is not a waiver.</li>
+        <li><strong>Assignment.</strong> You may not transfer these Terms; FractalLabs may assign them in connection with a project transfer or reorganization.</li>
+        <li><strong>Force majeure.</strong> We are not liable for failures caused by events beyond reasonable control (third-party outages, internet failures, acts of God).</li>
+        <li><strong>Headings</strong> are for convenience only.</li>
+      </ol>
+    </section>
+
+    <!-- ===== 17. CONTACT ===== -->
+    <section class="doc" id="s17">
+      <div class="doc-head">
+        <span class="eyebrow">SECTION 17</span>
+        <h2 class="h2">Contact</h2>
+      </div>
+      <div class="card info">
+        <p>Questions about these Terms:</p>
+        <p><strong>FractalLabs</strong> — email: <strong>FractalLabsISAC@gmail.com</strong></p>
+      </div>
+    </section>
+
+  </main>
+</div>
+</div>
+
+<footer class="foot"><div class="cin">
+  <span class="fbrand">
+    <span class="fchip"><img src="../full.png" alt=""></span>
+    <span>© 2026
+        THEEXTREME_RAY — FRACTALLAUNCHER</span>
+  </span>
+  <span class="fdocs">
+    <a href="../EULA">EULA</a>
+    <a href="../documentation">DOCUMENTATION</a>
+  </span>
+  <span>NOT AFFILIATED WITH MOJANG STUDIOS OR MICROSOFT</span>
+</div></footer>
+
+</body>
+</html>

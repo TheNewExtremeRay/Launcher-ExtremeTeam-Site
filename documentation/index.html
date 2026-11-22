@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FractalLauncher — Full Documentation</title>
+<meta name="description" content="Complete technical documentation for FractalLauncher v1.2.3 — every file, every subsystem.">
+<meta name="theme-color" content="#0a0a0d">
+<link rel="icon" type="image/png" href="../logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Geist:wght@300..800&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:#0a0a0d;color:#f4f4f6;font-family:'Geist',-apple-system,'Segoe UI',sans-serif;-webkit-font-smoothing:antialiased;line-height:1.65}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+a{color:inherit;text-decoration:none;cursor:pointer}
+a:focus-visible,button:focus-visible{outline:2px solid currentColor;outline-offset:2px;border-radius:4px}
+img{display:block}
+[id]{scroll-margin-top:120px}
+::selection{background:rgba(95,212,255,.3)}
+
+:root{
+  --bg:#0a0a0d;--srf:#101016;--srf2:#14141c;--fg:#f4f4f6;--mut:#c9c9d2;--dim:#9a9aa6;
+  --brd:rgba(255,255,255,.1);--brd2:rgba(255,255,255,.2);--hov:rgba(255,255,255,.05);
+  --nav:rgba(10,10,13,.75);--acc:#4586c6;--accd:#3770ab;--cy:#5fd4ff;--grn:#3fb950;
+  --warn:#fbbf24;--err:#f87171;--info:#60a5fa;
+  --shadow:0 34px 90px -32px rgba(0,0,0,.75)
+}
+
+.cin{max-width:1120px;margin:0 auto;padding:0 24px}
+.mono{font-family:'Geist Mono',monospace}
+
+/* ---------- NAV ---------- */
+.nav{position:sticky;top:0;z-index:40;-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);background:var(--nav);border-bottom:1px solid var(--brd)}
+.nav .cin{height:96px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.logo{display:flex;align-items:center}
+.lchip{display:inline-flex;align-items:center;justify-content:center;padding:12px 18px;background:#000;border:1px solid var(--brd);border-radius:14px}
+.lchip img{height:72px;width:auto;max-width:none}
+.nlinks{display:flex;gap:26px;font:400 13.5px 'Geist';color:var(--mut)}
+.nlinks a{transition:color .15s}
+.nlinks a:hover{color:#fff}
+.bt{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:42px;padding:0 20px;border-radius:10px;font:500 14px 'Geist';letter-spacing:-.01em;transition:.18s;white-space:nowrap}
+.bt-p{background:var(--acc);color:#fff}
+.bt-p:hover{background:var(--accd)}
+.bt-g{border:1px solid var(--brd2);color:#fff}
+.bt-g:hover{background:var(--hov)}
+.bt-sm{height:34px;padding:0 15px;font-size:13px;border-radius:8px}
+
+/* ---------- TYPE ---------- */
+.eyebrow{font:500 11px 'Geist Mono';letter-spacing:.16em;color:var(--cy);text-transform:uppercase}
+.h2{font:650 clamp(26px,3.4vw,40px)/1.12 'Geist';letter-spacing:-.025em;color:#fff}
+.h3{font:600 18px 'Geist';letter-spacing:-.012em;color:#fff}
+.h4{font:600 14.5px 'Geist';letter-spacing:-.005em;color:#fff;margin:22px 0 8px}
+.sub{font:400 16.5px/1.65 'Geist';color:var(--mut)}
+
+/* ---------- HERO ---------- */
+.hero{text-align:center;padding:clamp(64px,9vw,110px) 0 clamp(40px,5vw,60px);position:relative}
+.hero::after{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.05) 1px,transparent 1px);background-size:26px 26px;-webkit-mask-image:linear-gradient(#000 25%,transparent 85%);mask-image:linear-gradient(#000 25%,transparent 85%);pointer-events:none}
+.hero>*{position:relative;z-index:1}
+.hero h1{font-family:'Archivo Black',sans-serif;font-weight:400;color:#fff;
+  font-size:clamp(34px,6vw,78px);line-height:1.04;letter-spacing:-.01em;text-transform:uppercase;
+  max-width:18ch;margin:0 auto}
+.hero .sub{max-width:64ch;margin:22px auto 0}
+.meta{margin-top:18px;font:400 11px 'Geist Mono';color:var(--cy);letter-spacing:.06em}
+
+/* ---------- RISE ---------- */
+.rise{opacity:0;transform:translateY(14px);animation:rise .65s cubic-bezier(.2,.7,.25,1) forwards;animation-delay:var(--d,0s)}
+@keyframes rise{to{opacity:1;transform:none}}
+
+/* ---------- TOC ---------- */
+.toc-wrap{position:sticky;top:120px;margin-top:8px}
+.toc{background:var(--srf);border:1px solid var(--brd);border-radius:14px;padding:18px 22px}
+.toc h4{font:500 10.5px 'Geist Mono';letter-spacing:.16em;color:var(--cy);text-transform:uppercase;margin-bottom:12px}
+.toc ol{list-style:none;margin:0;padding:0;counter-reset:toc}
+.toc li{counter-increment:toc;margin:0}
+.toc li a{display:flex;gap:10px;padding:6px 0;font:400 13px 'Geist';color:var(--mut);transition:color .15s;border-radius:6px}
+.toc li a::before{content:counter(toc,decimal-leading-zero);font:400 11px 'Geist Mono';color:var(--cy);min-width:22px}
+.toc li a:hover{color:#fff}
+
+/* ---------- LAYOUT ---------- */
+.doc-grid{display:grid;grid-template-columns:260px 1fr;gap:36px;align-items:start;padding-bottom:clamp(56px,8vw,96px)}
+.doc-body{min-width:0}
+
+section.doc{padding:clamp(40px,5vw,56px) 0;border-top:1px solid var(--brd)}
+section.doc:first-child{border-top:0;padding-top:0}
+.doc-head{margin-bottom:24px}
+.doc-head .eyebrow{display:block;margin-bottom:10px}
+.doc-head .h2{margin-bottom:10px}
+.doc-head .sub{max-width:64ch}
+
+/* ---------- TEXT ---------- */
+p{margin:10px 0;color:var(--mut);font:400 14.5px/1.7 'Geist'}
+p strong,li strong,td strong{color:#fff;font-weight:600}
+ul,ol{margin:12px 0 12px 4px;color:var(--mut);list-style:none;padding:0}
+ul li,ol li{position:relative;padding-left:22px;margin:7px 0;font:400 14px/1.7 'Geist'}
+ul li::before{content:"";position:absolute;left:6px;top:11px;width:4px;height:4px;border-radius:50%;background:var(--cy)}
+ol{counter-reset:li}
+ol li{counter-increment:li}
+ol li::before{content:counter(li);position:absolute;left:0;top:1px;font:500 11px 'Geist Mono';color:var(--cy);background:rgba(95,212,255,.08);border:1px solid rgba(95,212,255,.2);border-radius:5px;padding:1px 6px;line-height:1.4}
+ul ul,ol ol,ul ol,ol ul{margin:6px 0 6px 4px}
+
+/* ---------- CODE ---------- */
+code{font-family:'Geist Mono',monospace;font-size:.86em;background:rgba(69,134,198,.14);color:#9fcdf5;padding:2px 7px;border-radius:5px;border:1px solid rgba(69,134,198,.18)}
+pre{background:#08080b;border:1px solid var(--brd);border-radius:12px;padding:16px 18px;overflow-x:auto;margin:14px 0}
+pre code{background:none;color:#c9d4e8;padding:0;font-size:12.5px;line-height:1.7;border:0}
+pre code .c{color:var(--dim)}
+
+/* ---------- TABLES ---------- */
+table{width:100%;border-collapse:collapse;margin:16px 0;font:400 13.5px/1.55 'Geist';overflow:hidden;border-radius:12px;border:1px solid var(--brd)}
+th,td{border-bottom:1px solid var(--brd);padding:13px 16px;text-align:left;vertical-align:top}
+th{background:var(--srf);color:var(--cy);font:500 11px 'Geist Mono';letter-spacing:.1em;text-transform:uppercase;padding:14px 16px}
+td{color:var(--mut)}
+tr:last-child td{border-bottom:0}
+tr:hover td{background:rgba(255,255,255,.015)}
+td code{white-space:nowrap}
+
+/* ---------- BADGES ---------- */
+.badge{display:inline-block;font:600 9.5px 'Geist Mono';letter-spacing:.08em;text-transform:uppercase;padding:2px 8px;border-radius:20px;vertical-align:middle;margin-left:6px}
+.b-ok{background:rgba(63,185,80,.15);color:var(--grn)}
+.b-warn{background:rgba(251,191,36,.15);color:var(--warn)}
+.b-err{background:rgba(248,113,113,.15);color:var(--err)}
+.b-info{background:rgba(96,165,250,.15);color:var(--info)}
+
+/* ---------- CARDS ---------- */
+.card{background:var(--srf);border:1px solid var(--brd);border-radius:14px;padding:18px 22px;margin:16px 0}
+.card.warn{border-left:3px solid var(--warn)}
+.card.err{border-left:3px solid var(--err)}
+.card.ok{border-left:3px solid var(--grn)}
+.card.info{border-left:3px solid var(--info)}
+.card p{margin:6px 0}
+.card p:first-child{margin-top:0}
+.card p:last-child{margin-bottom:0}
+
+/* ---------- STRIP ---------- */
+.strip{margin-top:clamp(44px,6vw,68px);border-top:1px solid var(--brd);border-bottom:1px solid var(--brd);display:flex;flex-wrap:wrap;justify-content:center}
+.strip span{font:400 10px 'Geist Mono';letter-spacing:.18em;color:var(--cy);padding:13px 18px;border-right:1px solid var(--brd)}
+.strip span:last-child{border-right:0}
+
+/* ---------- FOOTER ---------- */
+.foot{border-top:1px solid var(--brd)}
+.foot .cin{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding-top:26px;padding-bottom:30px;font:400 11px 'Geist Mono';letter-spacing:.04em;color:var(--mut)}
+.foot .fbrand{display:flex;align-items:center;gap:12px}
+.fchip{display:inline-flex;align-items:center;justify-content:center;padding:8px 12px;background:#000;border:1px solid var(--brd);border-radius:8px}
+.fchip img{height:38px;width:auto;max-width:none}
+.foot a:hover{color:#fff}
+
+/* ---------- SCROLLBAR ---------- */
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-track{background:#08080b}
+::-webkit-scrollbar-thumb{background:#23232d;border-radius:6px;border:2px solid #08080b}
+::-webkit-scrollbar-thumb:hover{background:#2f2f3c}
+
+/* ---------- RESPONSIVE ---------- */
+@media(max-width:960px){
+  .doc-grid{grid-template-columns:1fr;gap:0}
+  .toc-wrap{position:relative;top:0;margin-bottom:24px}
+  .toc ol{columns:2;column-gap:18px}
+}
+@media(max-width:860px){
+  .nlinks{display:none}
+  .nav .cin{height:88px}
+  .lchip img{height:60px}
+  .toc ol{columns:1}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001s!important;transition-duration:.001s!important;scroll-behavior:auto!important}
+}
+</style>
+</head>
+<body>
+
+<header class="nav"><div class="cin">
+  <a class="logo" href="#top" aria-label="FractalLauncher — home">
+    <span class="lchip"><img src="../full.png" alt="FractalLauncher"></span>
+  </a>
+  <nav class="nlinks">
+    <a href="../index.html">Home</a>
+    <a href="#what">Overview</a>
+    <a href="#core">Architecture</a>
+    <a href="#issues">Issues</a>
+    <a href="#filemap">File map</a>
+  </nav>
+  <a class="bt bt-p bt-sm" data-dl href="https://launcher.extremeteam.online/downloads">Download</a>
+</div></header>
+
+<div class="hero cin" id="top">
+  <span class="eyebrow rise">DOCUMENTATION · V1.2.3 "MICROSOFT PATCH"</span>
+  <h1 class="rise" style="--d:.08s;margin-top:16px">Full Documentation</h1>
+  <p class="sub rise" style="--d:.14s">Every file, every subsystem. A complete technical read-through of <strong style="color:#fff">FractalLauncher</strong> — the Python + pywebview Minecraft launcher by TheExtreme_Ray, built with safety as a top priority.</p>
+  <p class="meta rise" style="--d:.2s">PYTHON + PYWEBVIEW &nbsp;·&nbsp; 61-METHOD BRIDGE &nbsp;·&nbsp; OPEN SOURCE</p>
+</div>
+
+<div class="cin">
+  <div class="strip">
+    <span>VANILLA</span><span>FABRIC</span><span>FORGE</span><span>QUILT</span><span>NEOFORGE</span><span>MICROSOFT OAUTH</span><span>OFFLINE SKINS</span><span>MODRINTH</span><span>CEREBRAS AI</span><span>20 THEMES</span><span>7 LANGUAGES</span>
+  </div>
+</div>
+
+<div class="cin">
+<div class="doc-grid">
+
+  <!-- ============ TOC ============ -->
+  <aside class="toc-wrap">
+    <nav class="toc">
+      <h4>Contents</h4>
+      <ol>
+        <li><a href="#what">What it is</a></li>
+        <li><a href="#entries">Entry points</a></li>
+        <li><a href="#core">launcher/ package</a></li>
+        <li><a href="#assets">assets/ frontend</a></li>
+        <li><a href="#build">Build pipeline</a></li>
+        <li><a href="#data">Bundled runtime data</a></li>
+        <li><a href="#flow">How a launch flows</a></li>
+        <li><a href="#endpoints">External services</a></li>
+        <li><a href="#storage">Data &amp; secrets</a></li>
+        <li><a href="#issues">Notable issues</a></li>
+        <li><a href="#filemap">Complete file map</a></li>
+      </ol>
+    </nav>
+  </aside>
+
+  <!-- ============ BODY ============ -->
+  <main class="doc-body">
+
+    <!-- ===== 1. WHAT IT IS ===== -->
+    <section class="doc" id="what">
+      <div class="doc-head">
+        <span class="eyebrow">SECTION 01</span>
+        <h2 class="h2">What it is</h2>
+      </div>
+      <p><strong>FractalLauncher v1.2.3 ("Microsoft Patch")</strong> is a feature-rich custom Minecraft launcher for Windows. Its backend is a Python package (<code>launcher/</code>) and its UI is a single self-contained 119&nbsp;KB HTML file (<code>assets/ui.html</code>) rendered inside a native window by <strong>pywebview</strong> (Microsoft Edge WebView2). The Python and JavaScript sides talk over pywebview's <code>js_api</code> bridge: JS calls a 61-method <code>API</code> object, and Python pushes events back as DOM <code>CustomEvent</code>s.</p>
+      <p>Feature highlights:</p>
+      <ul>
+        <li><strong>Vanilla + all mod loaders</strong> — Fabric, Forge, Quilt, NeoForge (installer jars fetched &amp; run automatically)</li>
+        <li><strong>Microsoft login</strong> — full Xbox OAuth2 flow (authorization-code + PKCE, Prism Launcher's public Azure client ID)</li>
+        <li><strong>Offline mode</strong> — with a full local <em>Yggdrasil / authlib-injector skin server</em> so offline skins actually work</li>
+        <li><strong>Multiple profiles &amp; accounts</strong> — each profile owns its version, loader, RAM, JVM args, game dir, resolution</li>
+        <li><strong>3D skin viewer</strong> — skinview3d (three.js) with cape support and 25 cape presets</li>
+        <li><strong>Modrinth browser</strong> — search/install mods, shaders and resource packs with dependency resolution and update checks</li>
+        <li><strong>Servers</strong> — curated server list + custom servers with real Server-List-Ping latency checks</li>
+        <li><strong>Screenshots editor, backups, diagnostics, console</strong> — canvas crop/blur/draw; zip backups of saves; Mesa3D <code>opengl32.dll</code> conflict detector</li>
+        <li><strong>AI-generated themes</strong> — type a description, a Cerebras LLM invents a palette</li>
+        <li><strong>7 languages</strong> — en, fr, es, pt, de + novelty Pirate &amp; Darija</li>
+        <li><strong>Performance tuning baked in</strong> — Aikar's G1GC flag set, ABOVE_NORMAL process priority, pre-launch asset cache audit, shipped mod-config presets</li>
+      </ul>
+      <div class="card warn">
+        <p><strong style="color:#fff">⚠ Architectural note:</strong> an older <strong>CustomTkinter</strong> desktop UI used to exist as <code>launcher/app.py</code>, but <strong>that file is gone</strong>. Every fallback path in <code>main.py</code>, <code>bootstrap.py</code> and <code>pyoxidizer.bzl</code> that references <code>launcher.app</code> is dead code that would crash if ever executed. The webview UI is the only real UI.</p>
+      </div>
+    </section>
+
+    <!-- ===== 2. ENTRY POINTS ===== -->
+    <section class="doc" id="entries">
+      <div class="doc-head">
+        <span class="eyebrow">SECTION 02</span>
+        <h2 class="h2">Entry points (root *.py)</h2>
+      </div>
+      <table>
+        <tr><th>File</th><th>Role</th></tr>
+        <tr>
+          <td><code>main.py</code><br><span class="mono" style="color:var(--dim);font-size:11px">167 lines</span></td>
+          <td><strong>Primary dev entry.</strong> Writes first-run <code>~/.FractalLauncher/config.json</code> (auto-detects <code>jdk/**/javaw.exe</code> and <code>Authlib/Authlib.jar</code> at any depth), then starts a pywebview window loading <code>assets/ui.html</code> with <code>API</code> as <code>js_api</code> (1200×720, min 900×580, background <code>#0d0f13</code>). Fallback chain on failure: auto-<code>pip install pywebview</code> and retry → CustomTkinter UI (<strong>broken — <code>launcher.app</code> missing</strong>).</td>
+        </tr>
+        <tr>
+          <td><code>main_webview.py</code><br><span class="mono" style="color:var(--dim);font-size:11px">113 lines</span></td>
+          <td>Near-duplicate of main.py's webview path (adds a <code>first_launch</code> flag, <code>frameless=False</code>). No CTK fallback. Essentially superseded by main.py.</td>
+        </tr>
+        <tr>
+          <td><code>bootstrap.py</code><br><span class="mono" style="color:var(--dim);font-size:11px">282 lines</span></td>
+          <td><strong>PyInstaller exe entry point.</strong> Handles the frozen environment (<code>sys._MEIPASS</code> vs cx_Freeze's exe-dir), pip-installs missing deps when not frozen (minecraft-launcher-lib, Pillow, requests, cryptography), checks the <strong>WebView2 runtime</strong> in the registry (<code>HKLM/HKCU\Software\Microsoft\EdgeUpdate\Clients\{F3017226-FE2A-4295-8BDF-00C3A9A7E4C5}</code>), writes first-run config relative to the exe dir, logs diagnostics to <code>~/.FractalLauncher/launcher.log</code>, then starts the same pywebview window.</td>
+        </tr>
+      </table>
+      <p>All three copy-paste the same config-bootstrap logic (bundled Java/Authlib detection) rather than sharing it.</p>
+      <h4 class="h4">Other root files</h4>
+      <table>
+        <tr><th>File</th><th>Role</th></tr>
+        <tr><td><code>run.bat</code></td><td>Runs <code>python main.py</code> with an error-pause wrapper.</td></tr>
+        <tr><td><code>requirements.txt</code></td><td><code>customtkinter, minecraft-launcher-lib&gt;=6.4, Pillow, requests, cryptography, pywebview&gt;=4.0</code>.</td></tr>
+        <tr><td><code>README.md</code></td><td><span class="badge b-warn">outdated</span> Describes <code>setup_and_run.py</code> and <code>launcher/app.py</code> — neither exists.</td></tr>
+        <tr><td><code>BUILD_INSTRUCTIONS.md</code></td><td><span class="badge b-warn">outdated</span> Claims Nuitka is the default builder and mentions a <code>cloudflared.exe</code> auto-download that was removed from the code.</td></tr>
+      </table>
+    </section>
+
+    <!-- ===== 3. CORE PACKAGE ===== -->
+    <section class="doc" id="core">
+      <div class="doc-head">
+        <span class="eyebrow">SECTION 03</span>
+        <h2 class="h2">launcher/ — the core package</h2>
+      </div>
+
+      <h3 class="h3" id="bridge" style="margin-top:8px">3.1 <span class="mono" style="color:var(--cy);font-size:14px">webview_bridge.py</span> (1,518 lines) — the JS↔Python API</h3>
+      <p><code>class API</code> (line 65) is exposed to JavaScript as <code>window.pywebview.api</code> and has <strong>61 public methods</strong>. Every method is synchronous (pywebview marshals calls onto worker threads) and follows one return convention:</p>
+<pre><code><span class="c"># success</span>
+{ "ok": True,  ...payload }
+
+<span class="c"># failure</span>
+{ "ok": False, "error": msg }</code></pre>
+
+      <h4 class="h4">Bridge mechanics</h4>
+      <ul>
+        <li><strong>JS → Python:</strong> the UI never touches <code>pywebview.api</code> directly; it caches the handle on <code>pywebviewready</code> and funnels everything through a generic dispatcher:
+<pre><code>async function call(method, ...args) {
+  const api = getApi();
+  if (!api) return { ok: false, error: 'API not ready' };
+  try { return await api[method](...args); } catch (e) { ... }
+}</code></pre>
+        56 of the 61 methods are invoked this way from <code>ui.html</code>.</li>
+        <li><strong>Python → JS:</strong> a single mechanism — <code>_push(event, data)</code> (line 94) calls <code>window.evaluate_js("window.dispatchEvent(new CustomEvent(...))")</code>. This is the <em>only</em> <code>evaluate_js</code> usage in the entire codebase.</li>
+        <li><strong>Async → sync adapters:</strong> callback-style backend functions are converted into blocking returns using <code>threading.Event</code> with timeouts (search 25&nbsp;s, mod install 10&nbsp;s, download up to 60&nbsp;s).</li>
+        <li><strong>Path safety:</strong> <code>_safe_path()</code> (line 20) does basename + <code>os.path.realpath</code> prefix checks for every file-delete/edit operation.</li>
+      </ul>
+
+      <h4 class="h4">Events pushed Python → JS</h4>
+      <table>
+        <tr><th>Event</th><th>When</th></tr>
+        <tr><td><code>launch_state</code></td><td><code>{state:"launching"|"stopped"|"error", code, error}</code></td></tr>
+        <tr><td><code>console_line</code></td><td>Every game log line + exit banner</td></tr>
+        <tr><td><code>console_clear</code></td><td>Console cleared</td></tr>
+        <tr><td><code>install_progress</code></td><td><code>{frac, speed, eta, downloaded, total…}</code> during installs</td></tr>
+        <tr><td><code>assets_cache</code></td><td>Pre-launch shared-cache audit report</td></tr>
+        <tr><td><code>microsoft_login_success</code> / <code>microsoft_login_error</code></td><td>OAuth flow result</td></tr>
+        <tr><td><code>mod_download_progress</code></td><td>Mod file download progress</td></tr>
+        <tr><td><code>mods_list_updated</code></td><td>After install/delete/toggle of a mod</td></tr>
+        <tr><td><code>dependency_installing</code></td><td><span class="badge b-err">dead event</span> pushed but never listened to in JS</td></tr>
+      </table>
+
+      <h4 class="h4">API methods, grouped by feature area</h4>
+      <table>
+        <tr><th>Area</th><th>Methods</th></tr>
+        <tr><td><strong>Profiles</strong></td><td><code>get_profiles</code>, <code>get_active_profile</code>, <code>set_active_profile</code>, <code>create_profile</code>, <code>delete_profile</code>, <code>update_profile</code> (camelCase→snake_case key map), <code>edit_jvm_notepad</code> (round-trips JVM args through notepad.exe, blocks ≤300&nbsp;s)</td></tr>
+        <tr><td><strong>Accounts / skins / capes</strong></td><td><code>get_accounts</code>, <code>get_active_account</code>, <code>add_offline_account</code>, <code>start_microsoft_login</code>, <code>set_active_account</code>, <code>delete_account</code>, <code>set_skin</code>, <code>cache_skin_from_url</code>, <code>set_cape</code>, <code>clear_cape</code>, <code>get_cape_presets</code></td></tr>
+        <tr><td><strong>Launch / console</strong></td><td><code>launch</code> (line 403 — full flow, see §7), <code>get_console_log</code>, <code>clear_console</code>, <code>kill_game</code> (terminate / SIGTERM), <code>check_assets</code> <span class="badge b-warn">unused by UI</span></td></tr>
+        <tr><td><strong>Mods / shaders / resource packs</strong></td><td><code>search_content</code>, <code>search_mods</code>, <code>get_installed_mods</code>, <code>toggle_mod</code> (.disabled rename), <code>delete_mod</code>, <code>install_mod</code> (returns top-10 compatible versions), <code>download_mod_version</code> (auto-installs required + optional Modrinth deps), <code>get_profile_game_dir</code>, <code>get_installed_content</code> / <code>delete_content</code> <span class="badge b-warn">unused</span></td></tr>
+        <tr><td><strong>Servers</strong></td><td><code>get_servers</code>, <code>add_server</code>, <code>ping_server</code> (hand-rolled Minecraft Server List Ping: varint packet, protocol 47, TCP, measures ms)</td></tr>
+        <tr><td><strong>Settings</strong></td><td><code>get_settings</code>, <code>save_settings</code>, <code>get_version_list</code>, <code>get_first_launch</code> / <code>complete_first_launch</code> <span class="badge b-warn">unused</span></td></tr>
+        <tr><td><strong>AI themes</strong></td><td><code>get_custom_themes</code>, <code>get_cerebras_key_status</code>, <code>set_cerebras_key</code>, <code>generate_custom_theme</code>, <code>open_theme_instructions</code>, <code>save_theme_to_file</code>, <code>import_custom_theme</code></td></tr>
+        <tr><td><strong>Native dialogs</strong></td><td><code>browse_file</code>, <code>browse_folder</code>, <code>open_folder</code></td></tr>
+        <tr><td><strong>Diagnostics</strong></td><td><code>run_diagnostics</code> — Java/authlib presence, mod count, <strong>Mesa3D <code>opengl32.dll</code> detector</strong> ("may cause 7 FPS! Delete it."), OS + RAM info</td></tr>
+        <tr><td><strong>Screenshots / backups</strong></td><td><code>get_screenshots</code>, <code>save_edited_screenshot</code> (base64 PNG), <code>backup_now</code> (zips profile <code>saves/</code> → <code>~/.FractalLauncher/backups/</code>), <code>get_backups</code>, <code>delete_backup</code></td></tr>
+        <tr><td><strong>Fonts</strong></td><td><code>get_font_presets</code>, <code>get_uploaded_fonts</code>, <code>upload_font</code>, <code>delete_font</code></td></tr>
+      </table>
+
+      <h3 class="h3" id="game" style="margin-top:32px">3.2 <span class="mono" style="color:var(--cy);font-size:14px">game.py</span> (1,135 lines) — install &amp; launch engine</h3>
+      <ul>
+        <li><strong>Downloads:</strong> fully delegated to <strong>minecraft-launcher-lib</strong> (SHA-1 verified, internal ThreadPool). This module adds a global <code>requests.Session</code> retry monkey-patch (<code>_install_requests_retry</code>, line 17 — 5× exponential backoff, because mll's <code>stream=True</code> breaks mid-iteration where request-level patching can't help), a 5-minute version-manifest cache, 3-attempt retries on <code>install_version</code> / <code>install_mod_loader</code>, and <code>check_assets_cache()</code> (line 240) — a pre-launch cache audit (merges <code>inheritsFrom</code> parents, respects library rules, dedupes asset hashes) that drives the "Shared cache" UI.</li>
+        <li><strong><code>build_launch_options()</code> (line 908):</strong>
+          <ul>
+            <li><code>-Xmx</code> = <code>-Xms</code> = profile RAM (heap never grows)</li>
+            <li>Full <strong>Aikar's G1GC flag set</strong>: <code>+UseG1GC, +DisableExplicitGC, +AlwaysPreTouch, G1NewSizePercent=30, G1MaxNewSizePercent=40, G1HeapRegionSize=16M, G1ReservePercent=20, G1HeapWastePercent=5, G1MixedGCCountTarget=4, MaxGCPauseMillis=200, InitiatingHeapOccupancyPercent=15, G1MixedGCLiveThresholdPercent=90, G1RSetUpdatingPauseTimePercent=5, SurvivorRatio=32, +PerfDisableSharedMem, MaxTenuringThreshold=1</code> + string dedup / OptimizeStringConcat / compressedOops</li>
+            <li>LWJGL software-OpenGL fallback &amp; FML ignore-cert flags (prevents old-LWJGL "Pixel format not accelerated" crashes)</li>
+            <li><code>-javaagent:Authlib.jar=http://127.0.0.1:&lt;port&gt;</code> inserted as the <strong>first</strong> JVM arg when a skin server port exists</li>
+            <li>Optional custom resolution; user JVM args from the profile; <code>executablePath</code> from <code>config.java_path</code></li>
+          </ul>
+        </li>
+        <li><strong>Mod loaders</strong> (<code>install_mod_loader</code>, line 414): Fabric &amp; Quilt via their official installer jars (maven.fabricmc.net / maven.quiltmc.org), Forge by unzipping the installer and executing its install-profile processors, NeoForge via <code>--install-client</code> — all run with the bundled Java, 3 retries.</li>
+        <li><strong>Offline-account skin server</strong> (<code>_SkinServer</code>, lines 566–890): a complete local <strong>Yggdrasil / authlib-injector</strong> HTTP server on <code>127.0.0.1:&lt;ephemeral&gt;</code> implementing <code>/</code> metadata (skinDomains + signaturePublickey), <code>/skin</code> &amp; <code>/cape</code> PNGs, <code>session/minecraft/hasJoined</code> &amp; <code>/profile</code>, and <code>authserver/authenticate|refresh|validate|join</code>. Textures are signed with a per-launch <strong>4096-bit RSA keypair</strong> (SHA1withRSA / PKCS1v15) — exactly what authlib-injector expects.</li>
+        <li><strong>Process launch</strong> (<code>launch_game</code>, line 1001): clears MC's <code>assets/skins</code> + <code>assets/avatars</code> cache so old accounts can't bleed through; starts <code>Popen</code> with <code>stdout=PIPE, stderr=STDOUT</code>, Windows <code>ABOVE_NORMAL_PRIORITY_CLASS</code> (0x8000) plus an extra <code>SetPriorityClass(ABOVE_NORMAL)</code> boost; streams <code>stdout</code> line-by-line to the UI via <code>on_log</code>; <strong>non-daemon</strong> thread so log draining finishes with the process; stops the skin server in <code>finally</code>.</li>
+      </ul>
+      <div class="card warn">
+        <p><strong style="color:#fff">⚠ "Hide launcher on game start" is not implemented.</strong> The <code>hide_launcher_on_game</code> setting is created, saved and read into <code>settings.hideOnGame</code> — but nothing ever hides or minimizes the window. It is currently inert.</p>
+      </div>
+
+      <h3 class="h3" id="auth" style="margin-top:32px">3.3 <span class="mono" style="color:var(--cy);font-size:14px">auth.py</span> (203 lines) — Microsoft OAuth</h3>
+      <ul>
+        <li><strong>Flow:</strong> authorization-code + <strong>PKCE</strong> (not device-code). <code>CLIENT_ID = "c36a9fb6-4f2a-41ff-90bd-ae7cc92031eb"</code> — <em>Prism Launcher's public Azure client ID</em> (no Azure setup needed). Redirect: <code>http://localhost:9876</code>.</li>
+        <li><strong>Steps:</strong> <code>mll.microsoft_account.get_secure_login_data()</code> → local one-shot <code>HTTPServer</code> on port 9876 (validates OAuth <code>state</code> for CSRF) → <code>webbrowser.open(login_url)</code> → wait ≤300&nbsp;s → <code>complete_login()</code> performs the full internal chain: login.live.com token → Xbox Live user authenticate → XSTS authorize → <code>api.minecraftservices.com/login_with_xbox</code> → entitlements → profile.</li>
+        <li><strong>Refresh:</strong> <code>refresh_microsoft_token()</code> wraps mll; triggered before <em>every</em> launch; failures are swallowed so launch continues with the stale token.</li>
+        <li><strong>Skin helpers:</strong> <code>_fetch_skin_url()</code> (sessionserver textures property → base64 → skin URL) and <code>fetch_skin_url_by_username()</code> for offline-account previews.</li>
+        <li><strong>No authlib-injector logic here</strong> — that lives in <code>game.py</code> (§3.2).</li>
+      </ul>
+
+      <h3 class="h3" id="profiles" style="margin-top:32px">3.4 <span class="mono" style="color:var(--cy);font-size:14px">profiles.py</span> (196 lines) — data model</h3>
+      <ul>
+        <li><code>@dataclass Account</code>: id, username, auth_type (<code>microsoft</code>/<code>offline</code>), uuid, access_token, refresh_token, skin_url, skin_path, skin_model (default/slim), cape_path.</li>
+        <li><code>@dataclass Profile</code>: id, name, version, mod_loader, mod_loader_version, account_id, ram_mb, jvm_args, game_dir, resolution_w/h, fullscreen.</li>
+        <li><code>ProfileManager</code> persists both to <strong><code>~/.FractalLauncher/profiles.json</code></strong> with atomic writes (tmp file + <code>os.replace</code>). The loader is <strong>schema-tolerant</strong>: it filters each entry to the dataclass's known fields, so older files missing new fields load fine (defaults apply) and unknown keys are dropped — that is the entire "migration" system.</li>
+        <li>Offline accounts get a stable fake UUID: <code>uuid3(NAMESPACE_DNS, username)</code>, token <code>"offline"</code>.</li>
+        <li>Removing an account also removes all profiles bound to it.</li>
+        <li><span class="badge b-warn">security</span> Tokens are stored <strong>in plaintext</strong> — no keyring, no DPAPI, no encryption.</li>
+      </ul>
+
+      <h3 class="h3" id="mods" style="margin-top:32px">3.5 <span class="mono" style="color:var(--cy);font-size:14px">mods.py</span> (501 lines) — Modrinth-only mod manager</h3>
+      <ul>
+        <li>API: <code>https://api.modrinth.com/v2</code> with UA <code>FractalLauncher/1.0 (contact@FractalLauncher.dev)</code>, 3× retry with linear backoff. <strong>No CurseForge integration and no modpack (.mrpack) support anywhere.</strong></li>
+        <li>Search uses facets (<code>project_type:mod|shader|resourcepack</code> + MC version + loader via <code>_LOADER_MAP</code>); versions endpoint filtered by <code>game_versions</code>/<code>loaders</code>; downloads are streamed 64&nbsp;KB chunks with progress and partial-file cleanup.</li>
+        <li><strong>Dependency resolver</strong> (<code>fetch_mod_dependencies</code>): pulls the latest matching version's <code>dependencies</code> array, keeps required + optional, resolves names via <code>/v2/project/{id}</code>.</li>
+        <li><strong>Update checker</strong> (heuristic): derives a slug from the installed filename, compares latest primary file name.</li>
+        <li>Mods live in each profile's own <code>&lt;game_dir&gt;/mods/</code>; enable/disable is a <code>.disabled</code> rename; deletes are path-traversal-guarded (<code>_sanitize_filename</code> + realpath prefix check).</li>
+      </ul>
+
+      <h3 class="h3" id="theme" style="margin-top:32px">3.6 <span class="mono" style="color:var(--cy);font-size:14px">theme.py</span> (476 lines) + <span class="mono" style="color:var(--cy);font-size:14px">theme.py.backup</span></h3>
+      <ul>
+        <li><strong>20 built-in themes</strong>: Lunar (default), Cyber, Forest, Eclipse, Sun, Amber, Nebula, Matrix, Glass, Dark, Ocean, Crimson, Aurora, Grid, Abyss, Green, Pink, Onyx, Ice, Gold.</li>
+        <li>Each theme dict carries <strong>both</strong> full CustomTkinter keys (<code>BG_DARK, ACCENT, TEXT_PRIMARY…</code>) <strong>and</strong> an 11-key webview schema (<code>bg, panel, card, accent, tp, ts, tm, ok, warn, err</code>) that maps directly onto CSS custom properties in <code>ui.html</code>.</li>
+        <li><code>_set_globals(theme)</code> injects a preset into the module's globals (the CTk live-retheme mechanism); <code>_build_ctk_theme(theme)</code> derives a CTk appearance dict at runtime.</li>
+        <li><code>theme.py.backup</code> is the pre-redesign 7-theme version (Lunar-blue palette, includes the only light theme, "Slate Light"). It is imported nowhere — a dormant snapshot.</li>
+      </ul>
+
+      <h3 class="h3" id="ai" style="margin-top:32px">3.7 <span class="mono" style="color:var(--cy);font-size:14px">ai_theme.py</span> (455 lines) — Cerebras LLM theme generator</h3>
+      <ul>
+        <li>A real LLM client, not procedural: <code>POST https://api.cerebras.ai/v1/chat/completions</code> (model discovery via <code>/v1/models</code>). Preferred models: llama3.1-8b → llama-3.3-70b → qwen-3-32b → … with automatic re-resolution and one retry if a model 404s.</li>
+        <li>User types "cyberpunk city at night" → system prompt demands raw JSON of exactly 18 hex keys (CTk schema) or 11 keys (webview schema) → response is fence-tolerant JSON-extracted, validated (<code>^#[0-9a-fA-F]{6}$</code>), missing/invalid keys filled from defaults, saved as <code>"AI: &lt;first 40 chars of prompt&gt;"</code>.</li>
+        <li>API key deliberately stored <strong>separate from config.json</strong>: plaintext <code>~/.FractalLauncher/cerebras_api_key.txt</code>. Generated themes persist to <code>custom_themes.json</code> / <code>custom_themes_web.json</code>.</li>
+        <li>Spoofs a Chrome User-Agent to bypass Cloudflare bot-blocking on the Cerebras API; explicit error handling for 401 / 403-Cloudflare-1010 / 404 / timeouts.</li>
+      </ul>
+      <p style="color:var(--dim);font-size:13px"><code>__init__.py</code> contains only a comment — the package exports nothing; consumers import submodules directly.</p>
+    </section>
+
+    <!-- ===== 4. ASSETS ===== -->
+    <section class="doc" id="assets">
+      <div class="doc-head">
+        <span class="eyebrow">SECTION 04</span>
+        <h2 class="h2">assets/ — the frontend</h2>
+      </div>
+
+      <h3 class="h3" style="margin-top:8px">4.1 <span class="mono" style="color:var(--cy);font-size:14px">ui.html</span> (2,417 lines, 119 KB)</h3>
+      <p>100% <strong>vanilla JS + hand-written CSS</strong> — no framework, no CDN, no build step, no modules. CSS custom properties on <code>:root</code> (<code>--bg, --panel, --card, --accent, --tp, --ts, --tm, --ok, --warn, --err, --border, --r, --t</code>) are the theming engine; <code>previewTheme()</code> writes them onto <code>document.documentElement.style</code>.</p>
+
+      <h4 class="h4">Pages (14)</h4>
+      <table>
+        <tr><th>Page</th><th>Content</th></tr>
+        <tr><td><code>pg-home</code></td><td>Hero banner with particle canvas, loader badge, profile/account/RAM/status, install progress, profile selector, big Launch button, action cards, Recent Activity</td></tr>
+        <tr><td><code>pg-profiles</code> / <code>pg-accounts</code></td><td>Profile &amp; account lists + create/add modals</td></tr>
+        <tr><td><code>pg-skins</code></td><td>3D skinview3d preview (WalkingAnimation, auto-rotate), upload dropzone, Classic/Slim toggle, Cape browse/presets/remove, Save to Account</td></tr>
+        <tr><td><code>pg-mods</code> / <code>pg-shaders</code> / <code>pg-resourcepacks</code></td><td>Installed list (left) + Modrinth search/browse with 20-per-page pagination (right), version-picker install modal with progress</td></tr>
+        <tr><td><code>pg-servers</code></td><td>Curated builtin list (Hypixel, CubeCraft, 2b2t, Wynncraft, …) + custom servers, async latency pings, Copy IP</td></tr>
+        <tr><td><code>pg-hosting</code></td><td>LAN/tunnel hosting guide — <span class="badge b-err">orphaned</span> no nav item points to it</td></tr>
+        <tr><td><code>pg-screenshots</code></td><td>Grid → canvas editor modal with Crop/Blur/Draw tools</td></tr>
+        <tr><td><code>pg-backups</code> / <code>pg-diagnostics</code></td><td>Backup Now + list; Run Checks (Java, authlib, Mesa3D, RAM)</td></tr>
+        <tr><td><code>pg-console</code></td><td>Log output with heuristic level coloring, Copy Log / Logs Folder / Kill Game / Clear, install progress bar</td></tr>
+        <tr><td><code>pg-settings</code></td><td>2-column grid: language, theme (20 presets + AI custom themes + import/export base64 short codes), fonts (presets + uploads), mc dir, hide toggle, RAM slider 1024–16384, java path, authlib path, About, Save Settings</td></tr>
+      </table>
+
+      <h4 class="h4">Integration details</h4>
+      <ul>
+        <li>All backend calls go through <code>call('method', …)</code> → <code>await window.pywebview.api.method(...)</code>.</li>
+        <li>Python→JS events: listeners for <code>launch_state</code>, <code>console_line</code>, <code>console_clear</code>, <code>install_progress</code>, <code>assets_cache</code>, <code>microsoft_login_success/error</code>, <code>mod_download_progress</code>, <code>mods_list_updated</code>.</li>
+        <li>Bridge-ready lifecycle: <code>pywebviewready</code> handler + a 50&nbsp;ms poller fallback in case the event fired before listeners attached.</li>
+        <li><strong>SoundFX</strong> (lines 799–1008): a full Web Audio API synthesizer for click/pop/nav/launch/success/error sounds, wired to a global click delegation. Secret: <em>press Ctrl+S twice quickly to mute/unmute</em>.</li>
+        <li>Scroll-position saver via MutationObserver that also monkey-patches <code>window.goto</code>.</li>
+        <li><span class="badge b-warn">branding bug:</span> <code>&lt;title&gt;</code> and the status bar say <strong>"ExtremeLauncher"</strong> while i18n strings and the Python window title say FractalLauncher.</li>
+      </ul>
+
+      <h3 class="h3" style="margin-top:32px">4.2 <span class="mono" style="color:var(--cy);font-size:14px">i18n.js</span> (366 lines)</h3>
+      <p>One flat global <code>I18N</code> object, ~175–184 snake_case keys per language, no namespaces/plurals/interpolation. <strong>7 languages:</strong> en, fr, es, pt, de, <strong>pirate</strong> 🏴‍☠️ ("Set Sail!", "Grog Allocation") and <strong>darija</strong> 🇲🇦 (Moroccan Arabic in Latin script). Switching is instant via <code>applyLanguage(lang)</code> which re-texts every <code>[data-i18n]</code> element; persistence happens only on Save Settings. About 77 keys are actually wired in the HTML; roughly half of each dictionary is unused, and the <code>username</code> key referenced in markup is missing from all seven dictionaries.</p>
+
+      <h3 class="h3" style="margin-top:32px">4.3 <span class="mono" style="color:var(--cy);font-size:14px">lib/skinview3d.bundle.js</span></h3>
+      <p>Vendored <strong>skinview3d v3.4.2</strong> (jsDelivr/Terser minified, embeds three.js r156), exposing the global <code>skinview3d</code> namespace. Used only on the Skins page.</p>
+
+      <h3 class="h3" style="margin-top:32px">4.4 Other assets</h3>
+      <ul>
+        <li><code>capes/*.png</code> — <strong>25 cape presets</strong> (Minecon 2012/2013/2015/2016, cherryblossom, coppercape, glass, portal, nightsky, TikTok, Twitch, "silly cat", …) served by <code>get_cape_presets</code> as <code>file:///</code> images in the Cape Library grid.</li>
+        <li><code>logo.ico</code> (230 KB) — app icon used by all build scripts.</li>
+        <li><code>CUSTOM_THEMES_SETUP.txt</code> — help doc for the Cerebras flow (get a free key at cloud.cerebras.ai → Set API Key button or the plaintext key file → generate), opened by the Settings "Instructions" button.</li>
+      </ul>
+    </section>
+
+    <!-- ===== 5. BUILD ===== -->
+    <section class="doc" id="build">
+      <div class="doc-head">
+        <span class="eyebrow">SECTION 05</span>
+        <h2 class="h2">Build &amp; packaging pipeline</h2>
+      </div>
+      <p>Four build generations coexist; only the PyInstaller path has produced artifacts (the 32&nbsp;MB <code>dist/FractalLauncher.exe</code> is present).</p>
+      <table>
+        <tr><th>File(s)</th><th>Strategy</th><th>Status</th></tr>
+        <tr>
+          <td><code>build_pyinstaller.py</code><br><code>FractalLauncher.spec</code></td>
+          <td>PyInstaller onefile from <code>bootstrap.py</code>: <code>--collect-all</code> for webview/PIL/cryptography/minecraft-launcher-lib, bundles <code>assets/</code> (jdk &amp; Authlib ship <em>beside</em> the exe), icon <code>assets/logo.ico</code>, UPX on, no console.</td>
+          <td><span class="badge b-ok">current</span> produced <code>dist/FractalLauncher.exe</code> (32,250,557 bytes) and the <code>build/FractalLauncher/</code> work dir</td>
+        </tr>
+        <tr>
+          <td><code>build_msi.py</code><br><code>nsis/installer.nsi</code></td>
+          <td>Generates an NSIS script → <code>makensis</code> → per-user Setup.exe bundling exe + jdk + authlib + assets, with Start-Menu/Desktop shortcuts and Add/Remove Programs registry keys.</td>
+          <td><span class="badge b-warn">stale</span> the checked-in <code>.nsi</code> hardcodes old absolute paths <code>E:\EL\FractalLauncher_full_fixed_v3\…</code> and a lowercase <code>authlib\</code> folder that is actually named <code>Authlib\</code></td>
+        </tr>
+        <tr>
+          <td><code>build.py</code></td>
+          <td>3-step: PyInstaller → stage <code>Authlib/config/jdk</code> (+optional <code>cloudflared.exe</code>) → <strong>cx_Freeze <code>bdist_msi</code></strong> using a dummy stub exe that just re-launches the real one; per-user <code>%LOCALAPPDATA%\FractalLauncher</code> install, no admin rights.</td>
+          <td><span class="badge b-warn">alternate</span> references nonexistent <code>assets/icon.ico</code> (only <code>logo.ico</code> exists)</td>
+        </tr>
+        <tr>
+          <td><code>build_pyoxidizer.py</code><br><code>pyoxidizer.bzl</code></td>
+          <td>PyOxidizer packaging of <code>bootstrap.py</code> + embedded assets.</td>
+          <td><span class="badge b-err">broken</span> <code>run_eval</code> imports <code>launcher.app</code> (missing)</td>
+        </tr>
+        <tr>
+          <td><code>build_installer.bat</code></td>
+          <td>Orchestrates <code>build_pyinstaller.py</code> → <code>build_msi.py</code> (NSIS).</td>
+          <td>helper</td>
+        </tr>
+      </table>
+    </section>
+
+    <!-- ===== 6. DATA ===== -->
+    <section class="doc" id="data">
+      <div class="doc-head">
+        <span class="eyebrow">SECTION 06</span>
+        <h2 class="h2">Bundled runtime data</h2>
+      </div>
+      <table>
+        <tr><th>Folder</th><th>Contents</th></tr>
+        <tr>
+          <td><code>jdk/</code></td>
+          <td>A full <strong>Oracle JDK 25.0.2 LTS</strong> for Windows x86_64 (<code>JAVA_RUNTIME_VERSION=25.0.2+10-LTS-69</code>) — not a trimmed JRE: includes jmods, javac, javadoc, jconsole, Graal compiler modules. Auto-discovered by all entry points (walks the tree for <code>javaw.exe</code>) and written into <code>config.json → java_path</code>.</td>
+        </tr>
+        <tr>
+          <td><code>Authlib/</code></td>
+          <td><code>Authlib.jar</code> — the <strong>authlib-injector</strong> Java agent. Injected as <code>-javaagent:Authlib.jar=http://127.0.0.1:&lt;port&gt;</code> so the game talks to the launcher's local Yggdrasil server for offline skins. Path stored in <code>config.json → authlib_injector_path</code>.</td>
+        </tr>
+        <tr>
+          <td><code>config/</code></td>
+          <td>A pre-tuned <code>.minecraft/config</code> snapshot for performance mods: <code>sodium-mixins.properties</code> &amp; <code>lithium.properties</code> (default notices), <code>modernfix-mixins.properties</code> (4.3&nbsp;KB of mixin toggles), <code>entityculling.json</code> (tick culling, nametags-through-walls, whitelists for Botania/Create/Alex's Caves/Quark/BetterEnd), <code>trender.json</code>, <code>transition.json</code>.<br>
+          <span class="badge b-warn">⚠ No launcher code ever copies these into a game directory</span> — only the MSI stages them. They are a "drop into .minecraft" optimization pack; the perf mods themselves (sodium/lithium/modernfix jars) are not auto-installed.</td>
+        </tr>
+        <tr>
+          <td><code>logs/</code></td>
+          <td>Actual runtime artifacts from playing this workspace's game dir (FML client logs, rotated <code>*.log.gz</code>, <code>latest.log</code>, <code>debug.log</code>). Not source code.</td>
+        </tr>
+        <tr>
+          <td><code>build/</code>, <code>dist/</code>, <code>__pycache__/</code></td>
+          <td>PyInstaller work products (PKG/PYZ/toc files, xref HTML) and stale bytecode for Python 3.12/3.13/3.14. Regenerable; not source.</td>
+        </tr>
+      </table>
+      <div class="card info">
+        <p><strong style="color:#fff">User data lives outside the repo</strong> in <code>~/.FractalLauncher/</code>: <code>config.json</code>, <code>profiles.json</code>, <code>cerebras_api_key.txt</code>, <code>custom_themes.json</code> / <code>custom_themes_web.json</code>, <code>skins/</code>, <code>backups/</code>, <code>fonts/</code>, <code>launcher.log</code>.</p>
+      </div>
+    </section>
+
+    <!-- ===== 7. FLOW ===== -->
+    <section class="doc" id="flow">
+      <div class="doc-head">
+        <span class="eyebrow">SECTION 07</span>
+        <h2 class="h2">How a launch actually flows</h2>
+      </div>
+      <ol>
+        <li><code>main.py</code> / <code>bootstrap.py</code> write first-run config (bundled java + authlib paths, defaults), then start the pywebview window; on <code>loaded</code> → <code>API.attach(pm, window)</code> prefetches the version manifest (5-min cache).</li>
+        <li><code>ui.html</code> fires <code>pywebviewready</code> → loads settings, custom themes, fonts → applies saved theme/language/font → <code>loadHome()</code>.</li>
+        <li>User presses <strong>Launch</strong> → <code>call('launch')</code> → <code>API.launch()</code> (bridge line 403):
+          <ul>
+            <li>re-entrancy guard; profile &amp; account checks;</li>
+            <li>refresh Microsoft token if applicable (result written back via <code>update_account_tokens</code>);</li>
+            <li>push <code>launch_state{launching}</code>;</li>
+            <li>resolve the installed version id through a 3-step search (name contains base+loader → exact profile.version → directory scan with <code>inheritsFrom</code> fallback);</li>
+            <li>push <code>assets_cache</code> + start <code>install_progress</code> tracking (sliding-window speed/ETA);</li>
+            <li>if missing: install vanilla (and then the mod loader) with 3× retries;</li>
+          </ul>
+        </li>
+        <li><code>game.launch_game()</code>:
+          <ul>
+            <li>clear MC skin/avatar caches;</li>
+            <li>offline account → boot <code>_SkinServer</code> (RSA keypair, health-check), set <code>authlib_base_url = http://127.0.0.1:&lt;port&gt;</code>;</li>
+            <li>build options (Aikar G1GC, authlib agent first, resolution, custom java) → <code>mll.command.get_minecraft_command()</code> → <code>Popen</code> with ABOVE_NORMAL priority;</li>
+            <li>stream stdout line-by-line → <code>console_line</code> events;</li>
+          </ul>
+        </li>
+        <li>On exit: <code>launch_state{stopped, code}</code>; skin server stopped in <code>finally</code>. The UI can re-fetch the whole buffer via <code>get_console_log()</code> or kill a running game via <code>kill_game()</code>.</li>
+      </ol>
+    </section>
+
+    <!-- ===== 8. ENDPOINTS ===== -->
+    <section class="doc" id="endpoints">
+      <div class="doc-head">
+        <span class="eyebrow">SECTION 08</span>
+        <h2 class="h2">External services contacted</h2>
+      </div>
+      <table>
+        <tr><th>Service</th><th>Endpoints</th><th>Purpose</th></tr>
+        <tr><td>Mojang</td><td><code>launchermeta.mojang.com</code> (version manifest), <code>libraries.minecraft.net</code>, <code>resources.download.minecraft.net</code>, <code>sessionserver.mojang.com</code>, <code>api.mojang.com</code></td><td>Versions, libraries, assets (all SHA-1 verified), skins/profiles</td></tr>
+        <tr><td>Microsoft / Xbox / Minecraft Services</td><td><code>login.microsoftonline.com</code>, <code>login.live.com</code>, <code>user.auth.xboxlive.com</code>, <code>xsts.auth.xboxlive.com</code>, <code>api.minecraftservices.com</code></td><td>OAuth login + token refresh + profile (via minecraft-launcher-lib)</td></tr>
+        <tr><td>Fabric</td><td><code>meta.fabricmc.net</code>, <code>maven.fabricmc.net</code></td><td>Loader metadata + installer jar</td></tr>
+        <tr><td>Quilt</td><td><code>meta.quiltmc.org</code>, <code>maven.quiltmc.org</code></td><td>Loader metadata + installer jar</td></tr>
+        <tr><td>Forge</td><td><code>maven.minecraftforge.net</code></td><td>Installer jar + processors</td></tr>
+        <tr><td>NeoForge</td><td><code>maven.neoforged.net</code></td><td>Installer jar</td></tr>
+        <tr><td>Modrinth</td><td><code>api.modrinth.com/v2</code> (+ CDN download URLs)</td><td>Mods/shaders/resourcepacks search, versions, dependencies, downloads</td></tr>
+        <tr><td>Cerebras</td><td><code>api.cerebras.ai/v1/chat/completions</code>, <code>/v1/models</code></td><td>AI theme generation</td></tr>
+        <tr><td>Loopback only</td><td><code>127.0.0.1:9876</code> (OAuth redirect), <code>127.0.0.1:&lt;ephemeral&gt;</code> (Yggdrasil skin server), raw TCP ping to game servers on :25565, UDP probe of 8.8.8.8:80 for LAN-IP discovery</td><td>Local flows</td></tr>
+      </table>
+      <p style="color:var(--dim);font-size:13px">The Cloudflare tunnel (<code>cloudflared.exe</code>) that once exposed the skin server publicly was removed — only build-script staging and unused <code>tunnel_proc</code> variables remain.</p>
+    </section>
+
+    <!-- ===== 9. STORAGE ===== -->
+    <section class="doc" id="storage">
+      <div class="doc-head">
+        <span class="eyebrow">SECTION 09</span>
+        <h2 class="h2">Where data &amp; secrets live</h2>
+      </div>
+      <table>
+        <tr><th>Data</th><th>Location</th><th>Protection</th></tr>
+        <tr><td>Accounts (incl. Microsoft <strong>access + refresh tokens</strong>), profiles</td><td><code>~/.FractalLauncher/profiles.json</code></td><td><span class="badge b-err">plaintext</span></td></tr>
+        <tr><td>Launcher config (java_path, authlib_injector_path, default_mc_dir, theme, servers, hide_launcher_on_game)</td><td><code>~/.FractalLauncher/config.json</code></td><td>plaintext</td></tr>
+        <tr><td>Cerebras AI API key</td><td><code>~/.FractalLauncher/cerebras_api_key.txt</code></td><td><span class="badge b-err">plaintext</span></td></tr>
+        <tr><td>Custom AI themes</td><td><code>~/.FractalLauncher/custom_themes.json</code>, <code>custom_themes_web.json</code></td><td>—</td></tr>
+        <tr><td>Skins / backups / fonts / launcher log</td><td><code>~/.FractalLauncher/{skins,backups,fonts}/</code>, <code>launcher.log</code></td><td>—</td></tr>
+      </table>
+      <p>No OS keychain, DPAPI, or Fernet/AES anywhere — the only use of the <code>cryptography</code> package is RSA texture-signing in <code>game.py</code>.</p>
+    </section>
+
+    <!-- ===== 10. ISSUES ===== -->
+    <section class="doc" id="issues">
+      <div class="doc-head">
+        <span class="eyebrow">SECTION 10</span>
+        <h2 class="h2">Notable issues &amp; bugs found</h2>
+      </div>
+      <ol>
+        <li><strong>Settings corruption (functional bug).</strong> <code>save_settings</code> writes the JS payload verbatim, which uses <em>camelCase</em> keys (<code>javaPath</code>, <code>authlibPath</code>, <code>defaultMcDir</code>, <code>hideOnGame</code>), but every reader expects <em>snake_case</em> (<code>java_path</code>, <code>authlib_injector_path</code>, <code>default_mc_dir</code>, <code>hide_launcher_on_game</code>). After the user saves settings once from the UI, Java/authlib/custom-game-dir preferences silently stop being honored. Additionally, <code>save_settings</code> <strong>overwrites config.json wholesale</strong> with only the 8 settings keys — wiping pre-existing <code>servers</code>, <code>first_launch</code>, etc.</li>
+        <li><strong><code>hideOnGame</code> is inert</strong> — saved, read into settings, never used to hide/minimize anything.</li>
+        <li><strong><code>launcher/app.py</code> is missing</strong> — the CTK fallbacks in <code>main.py</code>, <code>bootstrap.py</code> and <code>pyoxidizer.bzl</code> would crash if reached.</li>
+        <li><strong><code>pg-hosting</code> is unreachable</strong> — no sidebar item, no <code>goto('hosting')</code>.</li>
+        <li><strong>Branding mismatch</strong> — <code>&lt;title&gt;</code> and status bar say "ExtremeLauncher" (and the sidebar logo "EL") while everything else says FractalLauncher.</li>
+        <li><strong>Secrets in plaintext</strong> — MS tokens in profiles.json, Cerebras key in its own text file.</li>
+        <li><strong>Dead code</strong>: 5 unused bridge methods (<code>check_assets</code>, <code>get_installed_content</code>, <code>delete_content</code>, <code>get_first_launch</code>, <code>complete_first_launch</code>), duplicate <code>_do_launch</code> definition (bridge lines 494 &amp; 500), unused <code>_DownloadTracker</code> / <code>IncompleteReadException</code> / <code>_get_authlib_jvm_arg</code> in game.py, dead <code>dependency_installing</code> event, <code>restoreConsole()</code> never called, <code>theme.py.backup</code>, leftover <code>tunnel_proc</code> variables.</li>
+        <li><strong>Stale build inputs</strong> — <code>nsis/installer.nsi</code> hardcodes <code>E:\EL\FractalLauncher_full_fixed_v3\…</code>; <code>build.py</code> references nonexistent <code>assets/icon.ico</code>; README/BUILD_INSTRUCTIONS describe nonexistent files (<code>setup_and_run.py</code>, Nuitka default, cloudflared auto-download).</li>
+        <li><strong>Config folder never applied</strong> — the shipped <code>config/</code> optimization presets are only staged by the MSI; no launcher code copies them into a game dir, and no perf-mod jars are auto-installed.</li>
+        <li><strong>i18n gaps</strong> — the <code>username</code> key used in markup is missing from all 7 dictionaries; roughly half of each dictionary is unused; sidebar/mod/server/console strings are untranslated.</li>
+        <li><strong><code>_push()</code> escaping</strong> only replaces <code>'</code> — mostly safe because payloads are <code>json.dumps</code>-ed first, but it is the only sanitization before <code>evaluate_js</code>.</li>
+      </ol>
+    </section>
+
+    <!-- ===== 11. FILE MAP ===== -->
+    <section class="doc" id="filemap">
+      <div class="doc-head">
+        <span class="eyebrow">SECTION 11</span>
+        <h2 class="h2">Complete file map</h2>
+      </div>
+<pre><code>FractalLauncherOptimizable/
+├── main.py                  <span class="c"># Primary entry: config bootstrap + pywebview UI (fallback: CTK — broken)</span>
+├── main_webview.py          <span class="c"># Duplicate webview-only entry (superseded by main.py)</span>
+├── bootstrap.py             <span class="c"># PyInstaller exe entry: dep install, WebView2 check, logging, UI start</span>
+├── run.bat                  <span class="c"># python main.py with error pause</span>
+├── requirements.txt         <span class="c"># customtkinter, mll&gt;=6.4, Pillow, requests, cryptography, pywebview&gt;=4.0</span>
+├── README.md                <span class="c"># Outdated overview</span>
+├── BUILD_INSTRUCTIONS.md    <span class="c"># Outdated build docs (mentions Nuitka / cloudflared)</span>
+│
+├── build_pyinstaller.py     <span class="c"># [CURRENT] PyInstaller onefile build → dist/FractalLauncher.exe</span>
+├── FractalLauncher.spec     <span class="c"># PyInstaller spec (collect-all webview/PIL/cryptography/mll)</span>
+├── build_msi.py             <span class="c"># NSIS installer generator (stale absolute paths in output)</span>
+├── nsis/installer.nsi       <span class="c"># Generated NSIS script (stale: E:\EL\... paths)</span>
+├── build.py                 <span class="c"># PyInstaller → stage → cx_Freeze bdist_msi (per-user, no admin)</span>
+├── build_pyoxidizer.py      <span class="c"># PyOxidizer build (broken: imports launcher.app)</span>
+├── pyoxidizer.bzl           <span class="c"># PyOxidizer config (broken run_eval)</span>
+├── build_installer.bat      <span class="c"># Orchestrates PyInstaller → NSIS</span>
+│
+├── launcher/                <span class="c"># Python backend package</span>
+│   ├── __init__.py          <span class="c"># Comment only — no exports</span>
+│   ├── webview_bridge.py    <span class="c"># class API — 61-method JS bridge (1,518 lines)</span>
+│   ├── game.py              <span class="c"># Install/launch engine, G1GC tuning, local Yggdrasil server (1,135 lines)</span>
+│   ├── auth.py              <span class="c"># Microsoft OAuth2+PKCE via minecraft-launcher-lib</span>
+│   ├── profiles.py          <span class="c"># Account/Profile dataclasses + ProfileManager (profiles.json)</span>
+│   ├── mods.py              <span class="c"># Modrinth search/install/deps/updates for mods, shaders, packs</span>
+│   ├── theme.py             <span class="c"># 20 themes (CTk + webview schemas), _set_globals, _build_ctk_theme</span>
+│   ├── theme.py.backup      <span class="c"># Dormant pre-redesign 7-theme snapshot</span>
+│   └── ai_theme.py          <span class="c"># Cerebras LLM theme generator (plaintext key file)</span>
+│
+├── assets/                  <span class="c"># Frontend (bundled into the exe)</span>
+│   ├── ui.html              <span class="c"># 2,417-line vanilla-JS launcher UI (14 pages, 8 modals)</span>
+│   ├── i18n.js              <span class="c"># 7-language translation dict (incl. pirate &amp; darija)</span>
+│   ├── lib/skinview3d.bundle.js  <span class="c"># skinview3d v3.4.2 (embeds three.js r156)</span>
+│   ├── capes/*.png          <span class="c"># 25 cape preset images</span>
+│   ├── logo.ico             <span class="c"># App icon</span>
+│   └── CUSTOM_THEMES_SETUP.txt    <span class="c"># Cerebras API-key setup guide</span>
+│
+├── jdk/                     <span class="c"># Bundled Oracle JDK 25.0.2 LTS (x86_64 Windows, full JDK)</span>
+├── Authlib/Authlib.jar      <span class="c"># authlib-injector agent for offline skins</span>
+├── config/                  <span class="c"># Shipped perf-mod configs (sodium/lithium/modernfix/entityculling/…)</span>
+│                            <span class="c">#   ⚠ never auto-applied by the launcher</span>
+├── logs/                    <span class="c"># Runtime game logs (not source)</span>
+├── build/                   <span class="c"># PyInstaller work artifacts (regenerable)</span>
+├── dist/FractalLauncher.exe <span class="c"># Built launcher, 32.2 MB</span>
+└── __pycache__/             <span class="c"># Stale bytecode (py3.12/3.13/3.14)</span></code></pre>
+
+      <div class="card ok">
+        <p><strong style="color:#fff">TL;DR</strong> — pywebview hosts a vanilla-JS HTML app; a 61-method Python <code>API</code> object does everything (Microsoft OAuth via Prism's client ID, Modrinth browsing, launches via minecraft-launcher-lib with Aikar GC tuning and ABOVE_NORMAL priority, a local Yggdrasil server + authlib-injector for offline skins, Cerebras-powered AI themes); state lives in <code>~/.FractalLauncher/*.json</code> (plaintext); distribution is a 32&nbsp;MB PyInstaller onefile exe + bundled Oracle JDK 25 + authlib jar, installable via NSIS or cx_Freeze MSI — with an "optimization" mod-config folder that is shipped but never auto-applied.</p>
+      </div>
+    </section>
+
+  </main>
+</div>
+</div>
+
+<footer class="foot"><div class="cin">
+  <span class="fbrand">
+    <span class="fchip"><img src="../full.png" alt=""></span>
+    <span>© 2026
+        THEEXTREME_RAY — FRACTALLAUNCHER</span>
+  </span>
+  <span>FULL DOCUMENTATION · V1.2.3 "MICROSOFT PATCH"</span>
+  <span>NOT AFFILIATED WITH MOJANG STUDIOS OR MICROSOFT</span>
+</div></footer>
+
+</body>
+</html>

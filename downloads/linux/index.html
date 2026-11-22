@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Install on Linux — FractalLauncher</title>
+<meta name="description" content="Download FractalLauncher for Linux and follow the full install guide: install Python and dependencies, run it with run.sh, and route the bundled Java (jdk/) and AuthLib directories.">
+<meta name="theme-color" content="#0a0a0d">
+<link rel="icon" type="image/png" href="/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Geist:wght@300..800&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:#0a0a0d;color:#f4f4f6;font-family:'Geist',-apple-system,'Segoe UI',sans-serif;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none;cursor:pointer}
+a:focus-visible,button:focus-visible{outline:2px solid currentColor;outline-offset:2px;border-radius:4px}
+img{display:block}
+::selection{background:rgba(69,134,198,.35)}
+
+:root{
+  --bg:#0a0a0d;--srf:#101016;--srf2:#14141c;--fg:#f4f4f6;--mut:#a4a4ae;--dim:#6b6b74;
+  --brd:rgba(255,255,255,.08);--brd2:rgba(255,255,255,.16);--hov:rgba(255,255,255,.05);
+  --nav:rgba(10,10,13,.75);--acc:#4586c6;--accd:#3770ab;--accT:#8dbbe9;--grn:#3fb950;
+  --shadow:0 34px 90px -32px rgba(0,0,0,.75)
+}
+
+.cin{max-width:1120px;margin:0 auto;padding:0 24px}
+.nav{position:sticky;top:0;z-index:40;-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);background:var(--nav);border-bottom:1px solid var(--brd)}
+.nav .cin{height:96px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.logo{display:flex;align-items:center}
+.lchip{display:inline-flex;align-items:center;justify-content:center;padding:12px 18px;background:#000;border:1px solid var(--brd);border-radius:14px}
+.lchip img{height:72px;width:auto;max-width:none}
+.nlinks{display:flex;gap:26px;font:400 13.5px 'Geist';color:var(--mut)}
+.nlinks a{transition:color .15s}
+.nlinks a:hover{color:var(--fg)}
+.bt{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:42px;padding:0 20px;border-radius:10px;font:500 14px 'Geist';letter-spacing:-.01em;transition:.18s;white-space:nowrap}
+.bt-p{background:var(--acc);color:#fff}
+.bt-p:hover{background:var(--accd)}
+.bt-g{border:1px solid var(--brd2);color:var(--fg)}
+.bt-g:hover{background:var(--hov)}
+.bt-sm{height:34px;padding:0 15px;font-size:13px;border-radius:8px}
+.eyebrow{font:500 11px 'Geist Mono';letter-spacing:.16em;color:var(--dim);text-transform:uppercase}
+.h1{font-family:'Archivo Black',sans-serif;font-weight:400;color:#fff;font-size:clamp(34px,6vw,64px);line-height:1.05;letter-spacing:-.01em;text-transform:uppercase}
+.h2{font:650 clamp(26px,3.4vw,40px)/1.12 'Geist';letter-spacing:-.025em}
+.h3{font:600 16px 'Geist';letter-spacing:-.012em}
+.sub{font:400 16.5px/1.65 'Geist';color:var(--mut)}
+.grn{color:var(--grn)}
+.foot{border-top:1px solid var(--brd)}
+.foot .cin{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding-top:26px;padding-bottom:30px;font:400 11px 'Geist Mono';letter-spacing:.04em;color:var(--dim)}
+.foot .fbrand{display:flex;align-items:center;gap:12px}
+.fchip{display:inline-flex;align-items:center;justify-content:center;padding:8px 12px;background:#000;border:1px solid var(--brd);border-radius:8px}
+.fchip img{height:38px;width:auto;max-width:none}
+
+.rise{opacity:0;transform:translateY(14px);animation:rise .65s cubic-bezier(.2,.7,.25,1) forwards;animation-delay:var(--d,0s)}
+@keyframes rise{to{opacity:1;transform:none}}
+
+.ih{text-align:center;padding:clamp(64px,9vw,110px) 0 0}
+.ih .h1{max-width:18ch;margin:0 auto}
+.ih .sub{max-width:54ch;margin:20px auto 0}
+.ih .cta{display:flex;justify-content:center;gap:10px;margin-top:28px;flex-wrap:wrap}
+.ih .dnote{margin-top:14px;font:400 10.5px 'Geist Mono';color:var(--dim);letter-spacing:.06em}
+
+section.pad{padding:clamp(56px,8vw,96px) 0}
+section.pad.tight{padding-top:0}
+.col{max-width:760px;margin:0 auto}
+
+.tree{border:1px solid var(--brd);border-radius:16px;background:var(--srf);padding:22px 24px;font:400 13px/2 'Geist Mono';color:var(--mut)}
+.tree b{color:var(--fg);font-weight:500}
+.tree .d{color:var(--accT)}
+.tree .cmt{color:var(--dim)}
+
+.steps{margin-top:clamp(36px,5vw,52px)}
+.step{padding:26px 0;border-top:1px solid var(--brd)}
+.step .sno{font:400 11px 'Geist Mono';color:var(--dim);letter-spacing:.14em}
+.step h3{margin-top:10px;font:600 19px 'Geist';letter-spacing:-.015em}
+.step p{font:400 14.5px/1.7 'Geist';color:var(--mut);margin-top:8px;max-width:62ch}
+.step .path{font:400 12.5px 'Geist Mono';background:var(--srf2);border:1px solid var(--brd);border-radius:6px;padding:2px 7px;color:var(--fg)}
+
+.opt{margin:26px 0 0;border:1px dashed var(--acc);border-radius:14px;background:var(--srf);padding:22px 24px}
+.opt .otag{display:inline-block;font:500 10px 'Geist Mono';letter-spacing:.16em;color:var(--accT);border:1px solid var(--acc);border-radius:6px;padding:4px 10px;text-transform:uppercase}
+.opt h4{font:600 17px 'Geist';letter-spacing:-.015em;margin-top:14px}
+.opt p{font:400 14px/1.7 'Geist';color:var(--mut);margin-top:8px;max-width:62ch}
+.opt code{font:400 12.5px 'Geist Mono';background:var(--srf2);border:1px solid var(--brd);border-radius:6px;padding:2px 7px;color:var(--fg)}
+
+.seg{display:inline-grid;grid-auto-flow:column;grid-auto-columns:1fr;position:relative;margin:18px 0 0;padding:3px;border:1px solid var(--brd);border-radius:10px;background:var(--srf)}
+.seg .thumb{position:absolute;top:3px;bottom:3px;left:3px;width:calc((100% - 6px)/3);border-radius:7px;background:var(--fg);transform:translateX(calc(var(--i,0)*100%));transition:transform .3s cubic-bezier(.3,.7,.3,1)}
+.seg button{position:relative;z-index:1;padding:7px 16px;font:500 13px 'Geist';color:var(--mut);border-radius:7px;transition:color .25s}
+.seg button.on{color:var(--bg)}
+
+.cmd{position:relative;margin-top:14px;border:1px solid var(--brd);border-radius:12px;background:#0d0d12}
+.cmd .bar{display:flex;align-items:center;justify-content:space-between;padding:8px 8px 8px 14px;border-bottom:1px solid var(--brd)}
+.cmd .bar span{font:400 10px 'Geist Mono';letter-spacing:.14em;color:var(--dim);text-transform:uppercase}
+.cmd pre{padding:14px 16px;font:400 13px/1.8 'Geist Mono';color:#d8e6f5;overflow-x:auto;white-space:pre}
+.cmd .cp{font:500 10.5px 'Geist Mono';letter-spacing:.1em;padding:5px 11px;border:1px solid var(--brd2);border-radius:6px;color:var(--mut);transition:.15s}
+.cmd .cp:hover{color:var(--fg);background:var(--hov)}
+
+.tr{margin-top:clamp(36px,5vw,52px)}
+.qa{border-top:1px solid var(--brd)}
+.tr .qa:last-child{border-bottom:1px solid var(--brd)}
+.qa>button{width:100%;display:flex;justify-content:space-between;align-items:center;gap:18px;padding:18px 2px;text-align:left;font:500 15px 'Geist';letter-spacing:-.01em}
+.qa .pm{font:300 20px 'Geist';color:var(--dim);line-height:1;transition:transform .3s;flex-shrink:0}
+.qa.open .pm{transform:rotate(45deg);color:var(--fg)}
+.qa .ab{display:grid;grid-template-rows:0fr;transition:grid-template-rows .35s cubic-bezier(.3,.7,.3,1)}
+.qa .ab>div{overflow:hidden}
+.qa .ab p{padding:0 40px 18px 2px;font:400 14px/1.7 'Geist';color:var(--mut);max-width:66ch}
+.qa .ab code{font:400 12.5px 'Geist Mono';background:var(--srf2);border:1px solid var(--brd);border-radius:6px;padding:2px 7px}
+.qa.open .ab{grid-template-rows:1fr}
+
+#toasts{position:fixed;left:50%;bottom:26px;transform:translateX(-50%);z-index:99;display:flex;flex-direction:column;align-items:center;gap:8px;pointer-events:none}
+.toast{background:#16161d;color:#f1f1f4;border:1px solid #2b2b35;border-radius:9px;padding:9px 16px;font:400 12px 'Geist Mono';box-shadow:0 16px 40px rgba(0,0,0,.5);animation:tin .25s cubic-bezier(.2,.9,.3,1),tout .35s ease 2.4s forwards}
+@keyframes tin{from{opacity:0;transform:translateY(8px)}}
+@keyframes tout{to{opacity:0;transform:translateY(6px)}}
+
+@media(max-width:860px){
+  .nlinks{display:none}
+  .nav .cin{height:88px}
+  .lchip img{height:60px}
+  .cmd pre{font-size:12px}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001s!important;transition-duration:.001s!important;scroll-behavior:auto!important}
+}
+</style>
+</head>
+<body>
+
+<header class="nav"><div class="cin">
+  <a class="logo" href="/" aria-label="FractalLauncher — home">
+    <span class="lchip"><img src="/full.png" alt="FractalLauncher"></span>
+  </a>
+  <nav class="nlinks">
+    <a href="/">Home</a>
+    <a href="/#feat">Features</a>
+    <a href="/downloads">Downloads</a>
+    <a href="/#faq">FAQ</a>
+  </nav>
+  <a class="bt bt-p bt-sm" href="https://github.com/TheNewExtremeRay/FractalLauncher/releases/download/1.2.4/FractalLauncher-linux.zip">Download</a>
+</div></header>
+
+<div class="ih cin">
+  <span class="eyebrow rise">LINUX INSTALL GUIDE</span>
+  <h1 class="h1 rise" style="--d:.07s">Install on Linux.</h1>
+  <p class="sub rise" style="--d:.14s">Everything you need is inside the archive — including its own Java runtime and AuthLib. From Python to first launch in six steps.</p>
+  <div class="cta rise" style="--d:.2s">
+    <a class="bt bt-p" href="https://github.com/TheNewExtremeRay/FractalLauncher/releases/download/1.2.4/FractalLauncher-linux.zip">Download FractalLauncher_Linux.zip ↓</a>
+    <a class="bt bt-g" href="#steps">Jump to the steps</a>
+  </div>
+  <p class="dnote rise" style="--d:.26s">V1.2.4 · .ZIP ARCHIVE · PYTHON SOURCE</p>
+</div>
+
+<section class="pad tight cin" id="steps">
+  <div class="col">
+    <span class="eyebrow rise">WHAT'S IN THE ARCHIVE</span>
+    <div class="tree rise" style="--d:.08s;margin-top:16px">
+<b>FractalLauncher/</b><br>
+├&nbsp; <span class="d">assets/</span> <span class="cmt">— launcher UI files</span><br>
+├&nbsp; <span class="d">Authlib/</span> <span class="cmt">— offline skins &amp; accounts support</span><br>
+├&nbsp; <span class="d">jdk/</span> <span class="cmt">— bundled Java runtime, no system Java needed</span><br>
+├&nbsp; <span class="d">launcher/</span> <span class="cmt">— launcher core</span><br>
+├&nbsp; bootstrap.py <span class="cmt">— bootstraps everything on first run</span><br>
+├&nbsp; main.py · main_webview.py <span class="cmt">— entry points</span><br>
+├&nbsp; requirements.txt <span class="cmt">— Python dependencies</span><br>
+└&nbsp; <b>run.sh</b> <span class="cmt">— start the launcher</span>
+    </div>
+
+    <div class="steps">
+      <div class="step rise" style="--d:.12s">
+        <span class="sno">STEP 01</span>
+        <h3>Install Python and system libraries</h3>
+        <p>Python 3.10+ and pip are required. The launcher's window is rendered through WebKitGTK, so those system libraries go in the same command. Pick your distro:</p>
+        <div class="seg" id="seg" style="--n:3">
+          <span class="thumb"></span>
+          <button class="on" data-d="deb">Debian / Ubuntu</button>
+          <button data-d="fed">Fedora</button>
+          <button data-d="arch">Arch</button>
+        </div>
+        <div class="cmd" data-for="deb">
+          <div class="bar"><span>terminal</span><button class="cp" data-copy="sudo apt update && sudo apt install -y python3 python3-pip python3-venv python3-gi python3-gi-cairo gir1.2-gtk-3.0 gir1.2-webkit2-4.1">Copy</button></div>
+          <pre>sudo apt update &amp;&amp; sudo apt install -y python3 python3-pip python3-venv \
+  python3-gi python3-gi-cairo gir1.2-gtk-3.0 gir1.2-webkit2-4.1</pre>
+        </div>
+        <div class="cmd" data-for="fed" hidden>
+          <div class="bar"><span>terminal</span><button class="cp" data-copy="sudo dnf install -y python3 python3-pip python3-gobject gtk3 webkit2gtk4.1">Copy</button></div>
+          <pre>sudo dnf install -y python3 python3-pip python3-gobject gtk3 webkit2gtk4.1</pre>
+        </div>
+        <div class="cmd" data-for="arch" hidden>
+          <div class="bar"><span>terminal</span><button class="cp" data-copy="sudo pacman -S --needed python python-pip python-gobject gtk3 webkit2gtk-4.1">Copy</button></div>
+          <pre>sudo pacman -S --needed python python-pip python-gobject gtk3 webkit2gtk-4.1</pre>
+        </div>
+      </div>
+
+      <div class="step rise" style="--d:.16s">
+        <span class="sno">STEP 02</span>
+        <h3>Download and extract the archive</h3>
+        <p>Grab <span class="path">FractalLauncher_Linux.zip</span> with the download button at the top of this page, then unzip it anywhere you like — this guide uses <span class="path">~/FractalLauncher</span> as the example. Adjust every path below to wherever you actually extracted it. Opening a terminal directly inside the extracted folder makes the rest easier:</p>
+        <div class="cmd">
+          <div class="bar"><span>terminal</span><button class="cp" data-copy="cd ~/FractalLauncher">Copy</button></div>
+          <pre>cd ~/FractalLauncher</pre>
+        </div>
+      </div>
+
+      <div class="step rise" style="--d:.2s">
+        <span class="sno">STEP 03</span>
+        <h3>Install the Python dependencies</h3>
+        <p>A virtual environment keeps the launcher's packages separate from your system Python. Create one, activate it, then install everything listed in <span class="path">requirements.txt</span>:</p>
+        <div class="cmd">
+          <div class="bar"><span>terminal</span><button class="cp" data-copy="python3 -m venv .venv && source .venv/bin/activate && pip install -r requirements.txt">Copy</button></div>
+          <pre>python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt</pre>
+        </div>
+        <p>If <span class="path">run.sh</span> already starts the launcher fine in step 04, it handled this for you and you can skip it next time.</p>
+      </div>
+
+      <div class="step rise" style="--d:.24s">
+        <span class="sno">STEP 04</span>
+        <h3>Run it with run.sh</h3>
+        <p>Make the script executable once, then start the launcher. Run it from inside the extracted folder so it can find its own files:</p>
+        <div class="cmd">
+          <div class="bar"><span>terminal</span><button class="cp" data-copy="chmod +x run.sh && ./run.sh">Copy</button></div>
+          <pre>chmod +x run.sh
+./run.sh</pre>
+        </div>
+        <p>The first launch takes a little longer while <span class="path">bootstrap.py</span> prepares everything. After that, it's straight in.</p>
+
+        <div class="opt">
+          <span class="otag">Optional — older PCs</span>
+          <h4>Mesa 3.3 override</h4>
+          <p>On older machines — especially ones with Intel iGPUs or aging AMD GPUs — the Mesa driver sometimes reports an OpenGL version below 3.3, which the game needs. If the launcher or the game crashes with GL errors, or the window never renders, prefix the run command with the override so Mesa reports 3.3:</p>
+          <div class="cmd">
+            <div class="bar"><span>terminal</span><button class="cp" data-copy="MESA_GL_VERSION_OVERRIDE=3.3 ./run.sh">Copy</button></div>
+            <pre>MESA_GL_VERSION_OVERRIDE=3.3 ./run.sh</pre>
+          </div>
+          <p>This is harmless on modern hardware, so if in doubt, just use it. If it fixes your problem and you want it permanent, open <span class="path">run.sh</span> in a text editor and add this as the first line:</p>
+          <div class="cmd">
+            <div class="bar"><span>run.sh — first line</span><button class="cp" data-copy="export MESA_GL_VERSION_OVERRIDE=3.3">Copy</button></div>
+            <pre>export MESA_GL_VERSION_OVERRIDE=3.3</pre>
+          </div>
+          <p>Still failing on very old hardware? Force full CPU rendering instead — slower, but it works almost anywhere:</p>
+          <div class="cmd">
+            <div class="bar"><span>terminal</span><button class="cp" data-copy="LIBGL_ALWAYS_SOFTWARE=1 MESA_GL_VERSION_OVERRIDE=3.3 ./run.sh">Copy</button></div>
+            <pre>LIBGL_ALWAYS_SOFTWARE=1 MESA_GL_VERSION_OVERRIDE=3.3 ./run.sh</pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="step rise" style="--d:.28s">
+        <span class="sno">STEP 05</span>
+        <h3>Route Java and AuthLib</h3>
+        <p>The archive ships with its own Java runtime and AuthLib — you never install Java yourself, you just tell the launcher where they are. Open <b>Settings</b> in the launcher:</p>
+        <p><b>Java Executable</b> — browse to the <span class="path">jdk/</span> folder inside the extracted directory. This is the Java the game runs on, so pointing it at the bundled one guarantees a compatible version.</p>
+        <div class="cmd">
+          <div class="bar"><span>example path</span><button class="cp" data-copy="~/FractalLauncher/jdk">Copy</button></div>
+          <pre>~/FractalLauncher/jdk</pre>
+        </div>
+        <p><b>AuthLib-Injector Path</b> — browse to the <span class="path">Authlib/</span> folder in the same place. This is what powers offline accounts: skins, capes and account handling all run through it, so leaving it unset means those features stay dark.</p>
+        <div class="cmd">
+          <div class="bar"><span>example path</span><button class="cp" data-copy="~/FractalLauncher/Authlib">Copy</button></div>
+          <pre>~/FractalLauncher/Authlib</pre>
+        </div>
+        <p>Both live side by side inside the folder you extracted — if you moved the folder after extracting, update both paths to match.</p>
+      </div>
+
+      <div class="step rise" style="--d:.32s">
+        <span class="sno">STEP 06</span>
+        <h3>Verify with Diagnostics, then launch</h3>
+        <p>Open the <b>Diagnostics</b> panel. It should report that the Java directory is set, that the AuthLib directory is set, that no installed mods are incompatible — plus your OS and allocated RAM. Anything still unset is listed by name. Once everything is green, add an account in <b>Accounts</b> — Microsoft or offline — pick a profile, and press launch.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="pad tight cin">
+  <div class="col">
+    <span class="eyebrow">TROUBLESHOOTING</span>
+    <h2 class="h2 rise" style="--d:.06s;margin-top:12px">If something bites.</h2>
+    <div class="tr rise" style="--d:.12s">
+      <div class="qa"><button>./run.sh says "Permission denied"<span class="pm">+</span></button><div class="ab"><div><p>The script hasn't been marked executable yet. Run <code>chmod +x run.sh</code> once inside the folder, then <code>./run.sh</code> again. If you copied the folder from a Windows machine, do this after the copy — permissions don't survive it.</p></div></div></div>
+      <div class="qa"><button>Older PC — GL errors, or the game won't render<span class="pm">+</span></button><div class="ab"><div><p>Old Intel iGPUs and aging AMD GPUs with Mesa drivers often report an OpenGL version below the 3.3 the game requires. Start the launcher with the override: <code>MESA_GL_VERSION_OVERRIDE=3.3 ./run.sh</code>. If that fixes it, make it permanent by adding <code>export MESA_GL_VERSION_OVERRIDE=3.3</code> as the first line of <code>run.sh</code>. On very old hardware, force full CPU rendering with <code>LIBGL_ALWAYS_SOFTWARE=1 MESA_GL_VERSION_OVERRIDE=3.3 ./run.sh</code> — slower, but reliable. This is the Linux equivalent of the Mesa3D patch offered for Windows.</p></div></div></div>
+      <div class="qa"><button>The window is blank, black, or freezes<span class="pm">+</span></button><div class="ab"><div><p>The launcher's window renders through WebKitGTK — if those libraries are missing, the window comes up empty. Install them with the command from step 01 (the <code>gir1.2-webkit2-4.1</code> / <code>webkit2gtk</code> packages), then start the launcher again. If the window renders but the game doesn't, that's the Mesa 3.3 override above.</p></div></div></div>
+      <div class="qa"><button>Python says "No module named …"<span class="pm">+</span></button><div class="ab"><div><p>The dependencies from step 03 aren't installed in the active environment. Re-run <code>pip install -r requirements.txt</code> — and if you use the virtual environment, make sure it's activated first with <code>source .venv/bin/activate</code>.</p></div></div></div>
+      <div class="qa"><button>The game won't start at all<span class="pm">+</span></button><div class="ab"><div><p>Open <b>Diagnostics</b> — it names exactly what's wrong: Java directory unset, AuthLib directory unset, or an incompatible mod. Fix what it lists and try again. If a launched game hangs, the <b>Console</b> has a kill-process button to end it cleanly, and every log line copies with one click.</p></div></div></div>
+      <div class="qa"><button>I moved the folder — now nothing works<span class="pm">+</span></button><div class="ab"><div><p>The Java and AuthLib paths you set in Settings point at the old location. Update both — <code>jdk/</code> and <code>Authlib/</code> inside the new folder — and check Diagnostics to confirm they're set again.</p></div></div></div>
+    </div>
+  </div>
+</section>
+
+<footer class="foot"><div class="cin">
+  <span class="fbrand">
+    <span class="fchip"><img src="/full.png" alt=""></span>
+    <span>© 2025 THEEXTREME_RAY — FRACTALLAUNCHER</span>
+  </span>
+  <span>OPEN SOURCE</span>
+  <span>NOT AFFILIATED WITH MOJANG STUDIOS OR MICROSOFT</span>
+</div></footer>
+
+<div id="toasts"></div>
+
+<script>
+function toast(msg){
+  const t=document.createElement('div');t.className='toast';t.textContent=msg;
+  document.getElementById('toasts').appendChild(t);
+  setTimeout(()=>t.remove(),3000);
+}
+
+/* distro tabs */
+(function(){
+  const seg=document.getElementById('seg');if(!seg)return;
+  const btns=[...seg.querySelectorAll('button')],th=seg.querySelector('.thumb');
+  const set=k=>{
+    btns.forEach(b=>b.classList.toggle('on',b.dataset.d===k));
+    th.style.setProperty('--i',btns.findIndex(b=>b.dataset.d===k));
+    document.querySelectorAll('.cmd[data-for]').forEach(c=>c.hidden=c.dataset.for!==k);
+  };
+  btns.forEach(b=>b.addEventListener('click',()=>set(b.dataset.d)));
+})();
+
+/* copy buttons */
+document.querySelectorAll('.cp').forEach(b=>b.addEventListener('click',()=>{
+  const v=b.dataset.copy;
+  const done=()=>toast('Copied — '+v);
+  const fb=()=>{const ta=document.createElement('textarea');ta.value=v;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');done()}catch(_){toast('Copy failed — select it manually')}ta.remove()};
+  if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(v).then(done).catch(fb);else fb();
+}));
+
+/* FAQ accordions */
+document.querySelectorAll('.qa>button').forEach(b=>b.addEventListener('click',()=>{
+  b.parentElement.classList.toggle('open');
+}));
+</script>
+</body>
+</html>

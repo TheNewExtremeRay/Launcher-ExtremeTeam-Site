@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FractalLauncher — Safety As A Top Priority</title>
+<meta name="description" content="FractalLauncher is a free, open-source Minecraft launcher by TheExtreme_Ray. Microsoft and offline accounts, profiles, skins, capes, mods, shaders, resource packs, backups and diagnostics — with safety as a top priority.">
+<meta name="theme-color" content="#0a0a0d">
+<link rel="icon" type="image/png" href="logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Geist:wght@300..800&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:#0a0a0d;color:#f4f4f6;font-family:'Geist',-apple-system,'Segoe UI',sans-serif;-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+a{color:inherit;text-decoration:none;cursor:pointer}
+a:focus-visible,button:focus-visible{outline:2px solid currentColor;outline-offset:2px;border-radius:4px}
+img{display:block}
+[id]{scroll-margin-top:120px}
+::selection{background:rgba(95,212,255,.3)}
+
+:root{
+  --bg:#0a0a0d;--srf:#101016;--srf2:#14141c;--fg:#f4f4f6;--mut:#c9c9d2;--dim:#9a9aa6;
+  --brd:rgba(255,255,255,.1);--brd2:rgba(255,255,255,.2);--hov:rgba(255,255,255,.05);
+  --nav:rgba(10,10,13,.75);--acc:#4586c6;--accd:#3770ab;--cy:#5fd4ff;--grn:#3fb950;
+  --shadow:0 34px 90px -32px rgba(0,0,0,.75)
+}
+
+.cin{max-width:1120px;margin:0 auto;padding:0 24px}
+.mono{font-family:'Geist Mono',monospace}
+.nav{position:sticky;top:0;z-index:40;-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);background:var(--nav);border-bottom:1px solid var(--brd)}
+.nav .cin{height:96px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.logo{display:flex;align-items:center}
+.lchip{display:inline-flex;align-items:center;justify-content:center;padding:12px 18px;background:#000;border:1px solid var(--brd);border-radius:14px}
+.lchip img{height:72px;width:auto;max-width:none}
+.nlinks{display:flex;gap:26px;font:400 13.5px 'Geist';color:var(--mut)}
+.nlinks a{transition:color .15s}
+.nlinks a:hover{color:#fff}
+.bt{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:42px;padding:0 20px;border-radius:10px;font:500 14px 'Geist';letter-spacing:-.01em;transition:.18s;white-space:nowrap}
+.bt-p{background:var(--acc);color:#fff}
+.bt-p:hover{background:var(--accd)}
+.bt-g{border:1px solid var(--brd2);color:#fff}
+.bt-g:hover{background:var(--hov)}
+.bt-sm{height:34px;padding:0 15px;font-size:13px;border-radius:8px}
+.eyebrow{font:500 11px 'Geist Mono';letter-spacing:.16em;color:var(--cy);text-transform:uppercase}
+.h2{font:650 clamp(26px,3.4vw,40px)/1.12 'Geist';letter-spacing:-.025em;color:#fff}
+.h3{font:600 16px 'Geist';letter-spacing:-.012em;color:#fff}
+.sub{font:400 16.5px/1.65 'Geist';color:var(--mut)}
+.foot{border-top:1px solid var(--brd)}
+.foot .cin{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding-top:26px;padding-bottom:30px;font:400 11px 'Geist Mono';letter-spacing:.04em;color:var(--mut)}
+.foot .fbrand{display:flex;align-items:center;gap:12px}
+.fchip{display:inline-flex;align-items:center;justify-content:center;padding:8px 12px;background:#000;border:1px solid var(--brd);border-radius:8px}
+.fchip img{height:38px;width:auto;max-width:none}
+.foot a:hover{color:#fff}
+
+.rise{opacity:0;transform:translateY(14px);animation:rise .65s cubic-bezier(.2,.7,.25,1) forwards;animation-delay:var(--d,0s)}
+@keyframes rise{to{opacity:1;transform:none}}
+
+.hero{text-align:center;padding:clamp(64px,9vw,110px) 0 0;position:relative}
+.hero::after{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.05) 1px,transparent 1px);background-size:26px 26px;-webkit-mask-image:linear-gradient(#000 25%,transparent 85%);mask-image:linear-gradient(#000 25%,transparent 85%);pointer-events:none}
+.hero>*{position:relative;z-index:1}
+.hero h1{font-family:'Archivo Black',sans-serif;font-weight:400;color:#ffffff;
+  font-size:clamp(34px,6vw,78px);line-height:1.04;letter-spacing:-.01em;text-transform:uppercase;
+  max-width:18ch;margin:0 auto}
+.hero .sub{max-width:56ch;margin:22px auto 0}
+.cta{display:flex;justify-content:center;gap:10px;margin-top:30px;flex-wrap:wrap}
+.meta{margin-top:18px;font:400 11px 'Geist Mono';color:var(--cy);letter-spacing:.06em}
+.meta a{color:inherit;transition:color .15s;text-decoration:none}
+.meta a:hover{color:#fff}
+
+.shot{background:var(--srf2);border:1px solid var(--brd);border-radius:14px;overflow:hidden;cursor:zoom-in;transition:border-color .25s}
+.shot:hover{border-color:var(--brd2)}
+.shot .fw{position:relative;aspect-ratio:1440/881;background:var(--srf)}
+.shot img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top center}
+.shot .ph{position:absolute;inset:12px;border:1px dashed var(--brd2);border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;color:var(--dim);font:400 11px 'Geist Mono';letter-spacing:.06em;text-align:center;padding:12px}
+.shot .ph b{font:500 12.5px 'Geist Mono';color:var(--cy);font-weight:500}
+.scap{display:flex;align-items:baseline;gap:10px;padding:13px 16px 14px;border-top:1px solid var(--brd)}
+.scap .no{font:400 10px 'Geist Mono';color:var(--cy)}
+.scap b{font:500 13.5px 'Geist';letter-spacing:-.01em;color:#fff;white-space:nowrap}
+.scap span{font:400 12px/1.5 'Geist';color:var(--mut);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.topshot{max-width:960px;margin:clamp(36px,5vw,56px) auto 0;box-shadow:var(--shadow)}
+
+.strip{margin-top:clamp(44px,6vw,68px);border-top:1px solid var(--brd);border-bottom:1px solid var(--brd);display:flex;flex-wrap:wrap;justify-content:center}
+.strip span{font:400 10px 'Geist Mono';letter-spacing:.18em;color:var(--cy);padding:13px 18px;border-right:1px solid var(--brd)}
+.strip span:last-child{border-right:0}
+
+section.pad{padding:clamp(56px,8vw,96px) 0}
+section.pad.tight{padding-top:0}
+.sechead{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;margin-bottom:34px}
+.sechead p{margin-top:10px;max-width:52ch}
+
+.feats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.feat{border:1px solid var(--brd);border-radius:14px;background:var(--srf);padding:22px;transition:border-color .25s}
+.feat:hover{border-color:var(--brd2)}
+.feat .fno{font:400 10.5px 'Geist Mono';color:var(--cy)}
+.feat h3{margin-top:10px}
+.feat p{font:400 13.5px/1.6 'Geist';color:var(--mut);margin-top:7px}
+.feat.wide{grid-column:1/-1}
+.feat.wide .inw{display:flex;gap:40px;align-items:baseline;justify-content:space-between;flex-wrap:wrap}
+.feat.wide p{max-width:70ch}
+
+.gal{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+
+.dev{text-align:center;border-top:1px solid var(--brd)}
+.dev .sub{max-width:64ch;margin:16px auto 0;font-size:15.5px}
+.dev .motto{margin-top:24px;font:500 12.5px 'Geist Mono';letter-spacing:.16em;color:var(--cy);text-transform:uppercase}
+
+.eds{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.ed{border:1px solid var(--brd);border-radius:16px;background:var(--srf);padding:28px;display:flex;flex-direction:column;align-items:flex-start}
+.ed.hot{border-color:var(--acc)}
+.ed .etag{font:500 10px 'Geist Mono';letter-spacing:.16em;color:var(--cy);text-transform:uppercase}
+.ed h3{font:600 20px 'Geist';letter-spacing:-.02em;margin-top:12px;color:#fff}
+.ed p{font:400 14px/1.65 'Geist';color:var(--mut);margin-top:10px;max-width:44ch}
+.ed .bt{margin-top:22px}
+.ed .enote{margin-top:14px;font:400 10.5px 'Geist Mono';color:var(--cy);letter-spacing:.04em}
+
+.faq{max-width:780px}
+.qa{border-top:1px solid var(--brd)}
+.faq .qa:last-child{border-bottom:1px solid var(--brd)}
+.qa>button{width:100%;display:flex;justify-content:space-between;align-items:center;gap:18px;padding:19px 2px;text-align:left;font:500 15.5px 'Geist';letter-spacing:-.01em;color:#fff}
+.qa .pm{font:300 20px 'Geist';color:var(--cy);line-height:1;transition:transform .3s;flex-shrink:0}
+.qa.open .pm{transform:rotate(45deg)}
+.qa .ab{display:grid;grid-template-rows:0fr;transition:grid-template-rows .35s cubic-bezier(.3,.7,.3,1)}
+.qa .ab>div{overflow:hidden}
+.qa .ab p{padding:0 40px 20px 2px;font:400 14px/1.7 'Geist';color:var(--mut);max-width:66ch}
+.qa.open .ab{grid-template-rows:1fr}
+
+#lb{position:fixed;inset:0;z-index:90;background:rgba(5,5,8,.9);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:56px 64px}
+#lb[hidden]{display:none}
+#lb img{max-width:100%;max-height:calc(100vh - 170px);border-radius:10px;border:1px solid rgba(255,255,255,.14);background:#0d0d12}
+#lb .lbcap{margin-top:16px;font:400 12px 'Geist Mono';color:#e6e6ec;letter-spacing:.04em;text-align:center}
+#lb .lbcnt{margin-top:6px;font:400 10.5px 'Geist Mono';color:var(--cy)}
+#lb button{position:fixed;color:#e6e6ec;font:300 30px/1 'Geist';padding:10px 16px;transition:color .15s}
+#lb button:hover{color:var(--cy)}
+#lbx{top:18px;right:22px}
+#lbn{top:50%;transform:translateY(-50%)}
+#lbp{top:50%;left:14px;transform:translateY(-50%)}
+
+#toasts{position:fixed;left:50%;bottom:26px;transform:translateX(-50%);z-index:99;display:flex;flex-direction:column;align-items:center;gap:8px;pointer-events:none}
+.toast{background:#16161d;color:#f1f1f4;border:1px solid #2b2b35;border-radius:9px;padding:9px 16px;font:400 12px 'Geist Mono';box-shadow:0 16px 40px rgba(0,0,0,.5);animation:tin .25s cubic-bezier(.2,.9,.3,1),tout .35s ease 2.8s forwards}
+@keyframes tin{from{opacity:0;transform:translateY(8px)}}
+@keyframes tout{to{opacity:0;transform:translateY(6px)}}
+
+#dbg{position:fixed;left:14px;bottom:14px;z-index:99;background:#0d0d12;border:1px solid #2b2b35;border-radius:10px;padding:12px 14px;font:400 11px/1.9 'Geist Mono';color:#c9c9d2;max-width:420px}
+#dbg b{color:#fff}
+#dbg .ok{color:#3fb950}
+#dbg .bad{color:#e5534b}
+
+@media(max-width:1080px){
+  .eds{grid-template-columns:1fr 1fr}
+  .ed.doc{grid-column:1/-1}
+}
+@media(max-width:860px){
+  .nlinks{display:none}
+  .nav .cin{height:88px}
+  .lchip img{height:60px}
+  .feats{grid-template-columns:1fr}
+  .gal{grid-template-columns:1fr}
+  .eds{grid-template-columns:1fr}
+  .ed.doc{grid-column:auto}
+  .scap span{display:none}
+  #lb{padding:48px 52px}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001s!important;transition-duration:.001s!important;scroll-behavior:auto!important}
+}
+</style>
+</head>
+<body>
+
+<header class="nav"><div class="cin">
+  <a class="logo" href="#top" aria-label="FractalLauncher — home">
+    <span class="lchip"><img src="full.png" alt="FractalLauncher"></span>
+  </a>
+  <nav class="nlinks">
+    <a href="#feat">Features</a>
+    <a href="#shots">Screenshots</a>
+    <a href="#dev">The developer</a>
+    <a href="#faq">FAQ</a>
+  </nav>
+  <a class="bt bt-p bt-sm" data-dl href="https://launcher.extremeteam.online/downloads">Download</a>
+</div></header>
+
+<div class="hero cin" id="top">
+  <h1 class="rise">Safety As A Top Priority</h1>
+  <p class="sub rise" style="--d:.14s">FractalLauncher is a free, open-source launcher for Microsoft and offline accounts — profiles, skins, capes, mods, shaders, resource packs, backups and diagnostics in one place. Made by TheExtreme_Ray.</p>
+  <div class="cta rise" style="--d:.2s">
+    <a class="bt bt-p" data-dl href="https://launcher.extremeteam.online/downloads">Download for Windows ↓</a>
+    <a class="bt bt-g" href="#shots">See it in action</a>
+  </div>
+  <p class="meta rise" style="--d:.26s"><a href="documentation#bridge">PYTHON + PYWEBVIEW</a> &nbsp;·&nbsp; <a href="https://github.com/TheNewExtremeRay/FractalLauncher" target="_blank" rel="noopener">OPEN SOURCE</a> &nbsp;·&nbsp; <a href="documentation#auth">MICROSOFT &amp; OFFLINE ACCOUNTS</a></p>
+</div>
+
+<div class="cin">
+  <figure class="shot topshot rise" style="--d:.32s">
+    <div class="fw">
+      <div class="ph"><b>homepage screenshot</b>screenshots/home.png</div>
+      <img src="screenshots/home.png" alt="FractalLauncher homepage — profile, account, RAM and quick actions">
+    </div>
+    <figcaption class="scap"><span class="no">01</span><b>Homepage</b><span>Profile, account and memory at a glance — backups, screenshots and diagnostics one click away.</span></figcaption>
+  </figure>
+</div>
+
+<div class="strip">
+  <span>PROFILES</span><span>ACCOUNTS</span><span>SKINS</span><span>CAPES</span><span>MODS</span><span>SHADERS</span><span>RESOURCE PACKS</span><span>SERVERS</span><span>SCREENSHOTS</span><span>BACKUPS</span><span>DIAGNOSTICS</span><span>CONSOLE</span>
+</div>
+
+<section class="pad cin" id="feat">
+  <div class="sechead">
+    <div>
+      <span class="eyebrow">FEATURES</span>
+      <h2 class="h2" style="margin-top:12px">Everything TL had. And more.</h2>
+      <p class="sub">FractalLauncher set out to be a replacement for TL — every feature judged from the consumer's point of view.</p>
+    </div>
+  </div>
+  <div class="feats">
+    <div class="feat"><span class="fno">01</span><h3 class="h3">Profiles &amp; instances</h3><p>Every profile keeps its own version, loader and memory allocation. Test something risky without ever touching your main setup.</p></div>
+    <div class="feat"><span class="fno">02</span><h3 class="h3">Microsoft &amp; offline accounts</h3><p>Sign in with a Microsoft account or play on a cracked one — both live side by side in the accounts manager, and switching is one click.</p></div>
+    <div class="feat"><span class="fno">03</span><h3 class="h3">Skin manager</h3><p>Upload any PNG skin and apply it to offline accounts through AuthLib — Classic or Slim model, with a live preview. Skins for offline accounts don't carry into multiplayer; that limit is stated up front, not buried.</p></div>
+    <div class="feat"><span class="fno">04</span><h3 class="h3">Free capes</h3><p>Built-in cape support for offline accounts with a set of preset capes ready to equip. No payments, no unlocks, no tiers.</p></div>
+    <div class="feat"><span class="fno">05</span><h3 class="h3">Mods from Modrinth</h3><p>Search Modrinth and install in one click. Everything you have installed sits in the same panel with toggles and instant removal.</p></div>
+    <div class="feat"><span class="fno">06</span><h3 class="h3">Shaders</h3><p>Fetch shaderpacks directly from Modrinth — from lightweight performance picks to full visual overhauls.</p></div>
+    <div class="feat"><span class="fno">07</span><h3 class="h3">Resource packs</h3><p>The same Modrinth flow for resource packs. Browse, install, done — no browser tabs, no manual folder digging.</p></div>
+    <div class="feat"><span class="fno">08</span><h3 class="h3">Recommended servers</h3><p>A built-in list of recommended servers, so finding somewhere to play doesn't mean hunting IPs on forums.</p></div>
+    <div class="feat"><span class="fno">09</span><h3 class="h3">Screenshots &amp; editor</h3><p>Browse every captured moment, then crop, blur or draw over screenshots right inside the launcher.</p></div>
+    <div class="feat"><span class="fno">10</span><h3 class="h3">World backups</h3><p>Snapshot your current save in one click before a big experiment. Your worlds stay yours.</p></div>
+    <div class="feat"><span class="fno">11</span><h3 class="h3">Diagnostics</h3><p>Checks that your Java directory is set, that AuthLib is in place, that no installed mods are incompatible — plus your OS and allocated RAM. Problems get found before they bite.</p></div>
+    <div class="feat"><span class="fno">12</span><h3 class="h3">Console</h3><p>Every launch and game log in one console — copy anything in a single click, and hit the kill-process button when a game hangs.</p></div>
+    <div class="feat wide"><div class="inw">
+      <div><span class="fno">13</span><h3 class="h3">Settings that go deep</h3></div>
+      <p>Multiple languages, built-in and custom themes — describe one and generate it — custom fonts, Java directories, and an about panel that tells you exactly what's running.</p>
+    </div></div>
+  </div>
+</section>
+
+<section class="pad tight cin" id="shots">
+  <div class="sechead">
+    <div>
+      <span class="eyebrow">SCREENSHOTS</span>
+      <h2 class="h2" style="margin-top:12px">The whole app, up close.</h2>
+      <p class="sub">Real captures from FractalLauncher. Click any shot to view it full size.</p>
+    </div>
+  </div>
+  <div class="gal">
+    <figure class="shot"><div class="fw">
+      <div class="ph"><b>homepage</b>screenshots/home.png</div>
+      <img src="screenshots/home.png" alt="Homepage screen" loading="lazy"></div>
+      <figcaption class="scap"><span class="no">01</span><b>Homepage</b><span>Where every session starts.</span></figcaption></figure>
+    <figure class="shot"><div class="fw">
+      <div class="ph"><b>profiles</b>screenshots/profiles.png</div>
+      <img src="screenshots/profiles.png" alt="Profiles screen" loading="lazy"></div>
+      <figcaption class="scap"><span class="no">02</span><b>Profiles</b><span>Create, edit and switch isolated profiles with their own loader and RAM.</span></figcaption></figure>
+    <figure class="shot"><div class="fw">
+      <div class="ph"><b>accounts</b>screenshots/accounts.png</div>
+      <img src="screenshots/accounts.png" alt="Accounts screen" loading="lazy"></div>
+      <figcaption class="scap"><span class="no">03</span><b>Accounts</b><span>Microsoft and offline accounts managed in one place.</span></figcaption></figure>
+    <figure class="shot"><div class="fw">
+      <div class="ph"><b>skin manager</b>screenshots/skins.png</div>
+      <img src="screenshots/skins.png" alt="Skin Manager screen" loading="lazy"></div>
+      <figcaption class="scap"><span class="no">04</span><b>Skin Manager</b><span>Skins via AuthLib, Classic / Slim models, and free preset capes.</span></figcaption></figure>
+    <figure class="shot"><div class="fw">
+      <div class="ph"><b>mods</b>screenshots/mods.png</div>
+      <img src="screenshots/mods.png" alt="Mods screen" loading="lazy"></div>
+      <figcaption class="scap"><span class="no">05</span><b>Mods</b><span>Modrinth browser with an installed list, toggles and instant removal.</span></figcaption></figure>
+    <figure class="shot"><div class="fw">
+      <div class="ph"><b>shaders</b>screenshots/shaders.png</div>
+      <img src="screenshots/shaders.png" alt="Shaders screen" loading="lazy"></div>
+      <figcaption class="scap"><span class="no">06</span><b>Shaders</b><span>Shaderpacks from Modrinth, one click each.</span></figcaption></figure>
+    <figure class="shot"><div class="fw">
+      <div class="ph"><b>resource packs</b>screenshots/resourcepacks.png</div>
+      <img src="screenshots/resourcepacks.png" alt="Resource Packs screen" loading="lazy"></div>
+      <figcaption class="scap"><span class="no">07</span><b>Resource Packs</b><span>The same direct Modrinth flow, for packs.</span></figcaption></figure>
+    <figure class="shot"><div class="fw">
+      <div class="ph"><b>settings</b>screenshots/settings.png</div>
+      <img src="screenshots/settings.png" alt="Settings screen" loading="lazy"></div>
+      <figcaption class="scap"><span class="no">08</span><b>Settings</b><span>Languages, themes, fonts, Java paths — and the about panel.</span></figcaption></figure>
+  </div>
+</section>
+
+<section class="pad dev cin" id="dev">
+  <span class="eyebrow">THE DEVELOPER</span>
+  <h2 class="h2" style="margin-top:12px">Built by TheExtreme_Ray.</h2>
+  <p class="sub">A YouTuber working hard to make a difference, TheExtreme_Ray builds FractalLauncher from the consumer's point of view — every feature is judged by how it feels to actually use, then refined until it's right. The whole thing is open source, and a Developer Edition ships every single file, including the ones used to build the app into an .exe and an installer.</p>
+  <p class="motto">Safety as a top priority — in the logo, and in the code.</p>
+</section>
+
+<section class="pad tight cin" id="ed">
+  <div class="eds">
+    <div class="ed">
+      <span class="etag">Standard</span>
+      <h3>Ready to run</h3>
+      <p>Download FractalLauncher, add an account, pick a profile, press launch. Free, and it stays that way.</p>
+      <a class="bt bt-p" data-dl href="https://launcher.extremeteam.online/downloads">Download for Windows ↓</a>
+      <span class="enote">WINDOWS</span>
+    </div>
+    <div class="ed hot">
+      <span class="etag">Developer Edition</span>
+      <h3>Everything included</h3>
+      <p>The complete source — Python and pywebview UI included, with all build files used to produce the .exe and the installer. Read it, audit it, fork it, build it yourself.</p>
+      <a class="bt bt-g" href="https://github.com/TheNewExtremeRay/FractalLauncher/releases/download/1.2.3/FractalLauncher_full_developper_edition.zip">Get the source →</a>
+      <span class="enote">FULL SOURCE + BUILD FILES</span>
+    </div>
+    <div class="ed doc">
+      <span class="etag">Documentation</span>
+      <h3>Read the source</h3>
+      <p>Every file, every subsystem — a complete technical read-through of FractalLauncher. Architecture, the 61-method bridge, build pipeline, known issues, and a full file map.</p>
+      <a class="bt bt-g" href="documentation">See documentation →</a>
+      <span class="enote">FULL TECHNICAL DOCS</span>
+    </div>
+  </div>
+</section>
+
+<section class="pad tight cin" id="faq">
+  <div class="sechead">
+    <div>
+      <span class="eyebrow">FAQ</span>
+      <h2 class="h2" style="margin-top:12px">Questions, answered straight.</h2>
+    </div>
+  </div>
+  <div class="faq">
+    <div class="qa"><button>What is FractalLauncher?<span class="pm">+</span></button><div class="ab"><div><p>A free, open-source Minecraft launcher written in Python, made by TheExtreme_Ray. It supports both Microsoft and offline (cracked) accounts, and bundles profiles, skins, capes, mods, shaders, resource packs, backups, diagnostics and a console into one app.</p></div></div></div>
+    <div class="qa"><button>Does it work with cracked accounts?<span class="pm">+</span></button><div class="ab"><div><p>Yes — offline accounts are first-class. You can set skins through AuthLib and equip free preset capes. One honest limitation: offline skins and capes only apply in single-player, not on multiplayer servers.</p></div></div></div>
+    <div class="qa"><button>Can I still use my Microsoft account?<span class="pm">+</span></button><div class="ab"><div><p>Yes. Microsoft and offline accounts live side by side in the accounts manager, and you can switch between them at any time.</p></div></div></div>
+    <div class="qa"><button>Where do mods, shaders and resource packs come from?<span class="pm">+</span></button><div class="ab"><div><p>Directly from Modrinth, fetched inside the launcher. Search, install and manage everything from the same panel — no manual folder work required.</p></div></div></div>
+    <div class="qa"><button>How is this different from TL?<span class="pm">+</span></button><div class="ab"><div><p>FractalLauncher set out to be a replacement for TL — the features people relied on, plus more — developed openly, with the consumer's point of view driving every decision and safety treated as the top priority.</p></div></div></div>
+    <div class="qa"><button>Is it safe?<span class="pm">+</span></button><div class="ab"><div><p>Safety is the project's stated top priority — and because the entire thing is open source (Developer Edition included, build files and all), you can verify exactly what runs on your machine instead of taking anyone's word for it.</p></div></div></div>
+    <div class="qa"><button>What does the Diagnostics panel check?<span class="pm">+</span></button><div class="ab"><div><p>Whether your Java directory is set, whether the AuthLib directory is set, whether any installed mods are incompatible — plus your operating system and allocated RAM.</p></div></div></div>
+    <div class="qa"><button>The game is stuck — what do I do?<span class="pm">+</span></button><div class="ab"><div><p>Open the console and press the kill-process button to end it cleanly. If you're reporting a bug, every log line can be copied with one click.</p></div></div></div>
+    <div class="qa"><button>Which platforms does it run on?<span class="pm">+</span></button><div class="ab"><div><p>It's built and shipped for Windows, available as an executable or an installer. There's a packaged Linux Zip file containing the source code modified to run on that platform, the instructions will guide you through it. And since it's fully open source — build files included — you can also run it straight from source on Windows too.</p></div></div></div>
+  </div>
+</section>
+
+<footer class="foot"><div class="cin">
+  <span class="fbrand">
+    <span class="fchip"><img src="full.png" alt=""></span>
+    <span>© 2026
+        THEEXTREME_RAY — FRACTALLAUNCHER</span>
+  </span>
+  <span>OPEN SOURCE</span>
+  <span>NOT AFFILIATED WITH MOJANG STUDIOS OR MICROSOFT</span>
+</div></footer>
+
+<div id="lb" hidden>
+  <button id="lbx" aria-label="Close">✕</button>
+  <button id="lbp" aria-label="Previous">‹</button>
+  <button id="lbn" aria-label="Next">›</button>
+  <img id="lbimg" alt="">
+  <p class="lbcap" id="lbcap"></p>
+  <p class="lbcnt" id="lbcnt"></p>
+</div>
+
+<div id="toasts"></div>
+
+<script>
+const SOURCE_URL = "";
+
+function toast(msg){
+  const t=document.createElement('div');t.className='toast';t.textContent=msg;
+  document.getElementById('toasts').appendChild(t);
+  setTimeout(()=>t.remove(),3400);
+}
+
+document.querySelectorAll('[data-src]').forEach(a=>{
+  if(SOURCE_URL){a.href=SOURCE_URL;a.target='_blank';a.rel='noopener'}
+  a.addEventListener('click',e=>{
+    if(!SOURCE_URL){e.preventDefault();toast('Source link not set — add SOURCE_URL at the top of the script.')}
+  });
+});
+
+document.querySelectorAll('.qa>button').forEach(b=>b.addEventListener('click',()=>{
+  b.parentElement.classList.toggle('open');
+}));
+
+const lb=document.getElementById('lb'),lbImg=document.getElementById('lbimg'),
+      lbCap=document.getElementById('lbcap'),lbCnt=document.getElementById('lbcnt');
+let list=[],idx=0;
+function show(){
+  const s=list[idx],img=s.querySelector('img'),cap=s.querySelector('.scap b');
+  lbImg.style.display=img?'':'none';
+  if(img){lbImg.src=img.src;lbImg.alt=img.alt||''}
+  lbCap.textContent=cap?cap.textContent:'';
+  lbCnt.textContent=(idx+1)+' / '+list.length;
+}
+function openLb(start){
+  list=[...document.querySelectorAll('.shot')].filter(s=>{const i=s.querySelector('img');return i&&i.naturalWidth>0});
+  if(!list.length){toast('No screenshots found — add the files to the screenshots/ folder.');return}
+  idx=list.indexOf(document.querySelectorAll('.shot')[start]);
+  show();lb.hidden=false;document.body.style.overflow='hidden';
+}
+function closeLb(){lb.hidden=true;document.body.style.overflow=''}
+function step(n){idx=(idx+n+list.length)%list.length;show()}
+document.addEventListener('click',e=>{
+  const shot=e.target.closest('.shot');
+  if(shot&&!lb.contains(e.target))openLb([...document.querySelectorAll('.shot')].indexOf(shot));
+});
+document.getElementById('lbx').addEventListener('click',closeLb);
+document.getElementById('lbp').addEventListener('click',()=>step(-1));
+document.getElementById('lbn').addEventListener('click',()=>step(1));
+lb.addEventListener('click',e=>{if(e.target===lb)closeLb()});
+document.addEventListener('keydown',e=>{
+  if(!lb.hidden){
+    if(e.key==='Escape')closeLb();
+    else if(e.key==='ArrowRight')step(1);
+    else if(e.key==='ArrowLeft')step(-1);
+  }
+});
+
+window.addEventListener('load',()=>{
+  const imgs=[...document.querySelectorAll('img')];
+  imgs.forEach(im=>{
+    if(im.complete&&im.naturalWidth===0)console.warn('Image failed:',im.currentSrc||im.src);
+  });
+  if(location.search.indexOf('debug')>-1){
+    const d=document.createElement('div');d.id='dbg';
+    let h='<b>IMAGE STATUS</b><br>';
+    imgs.forEach(im=>{
+      const ok=im.complete&&im.naturalWidth>0;
+      h+='<span class="'+(ok?'ok':'bad')+'">'+(ok?'OK ':'FAIL ')+'</span>'+(im.getAttribute('src')||'')+'<br>';
+    });
+    d.innerHTML=h;
+    document.body.appendChild(d);
+  }
+});
+</script>
+</body>
+</html>
